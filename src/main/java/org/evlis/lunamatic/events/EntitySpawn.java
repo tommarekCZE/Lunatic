@@ -1,4 +1,4 @@
-package org.evlis.lunatic.events;
+package org.evlis.lunamatic.events;
 
 import org.bukkit.Location;
 import org.bukkit.entity.*;

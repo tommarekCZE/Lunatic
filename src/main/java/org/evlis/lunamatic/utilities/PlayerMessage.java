@@ -1,4 +1,4 @@
-package org.evlis.lunatic.utilities;
+package org.evlis.lunamatic.utilities;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

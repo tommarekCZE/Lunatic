@@ -1,11 +1,11 @@
-package org.evlis.lunatic;
+package org.evlis.lunamatic;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.evlis.lunatic.events.PlayerJoin;
-import org.evlis.lunatic.triggers.Scheduler;
+import org.evlis.lunamatic.events.PlayerJoin;
+import org.evlis.lunamatic.triggers.Scheduler;
 
-public final class Lunatic extends JavaPlugin {
+public final class Lunamatic extends JavaPlugin {
 
     public static Boolean bloodMoonToday = false;
     public static Boolean bloodMoonNow = false;

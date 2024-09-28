@@ -1,4 +1,4 @@
-package org.evlis.lunatic.triggers;
+package org.evlis.lunamatic.triggers;
 
 import io.papermc.paper.world.MoonPhase;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -7,8 +7,8 @@ import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.evlis.lunatic.Lunatic;
-import org.evlis.lunatic.utilities.PlayerMessage;
+import org.evlis.lunamatic.Lunamatic;
+import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -30,8 +30,8 @@ public class Scheduler {
                 // Check if it's the start of the day (0 ticks, 6am)
                 if (time >= 0 && time < 20) {
                     @NotNull MoonPhase moonPhase = world.getMoonPhase();
-                    Lunatic.bloodMoonToday = false;
-                    Lunatic.bloodMoonNow = false;
+                    Lunamatic.bloodMoonToday = false;
+                    Lunamatic.bloodMoonNow = false;
                     if (moonPhase == MoonPhase.FULL_MOON) {
                         // TO-DO: Implement Harvest Moon
                         PlayerMessage.Send(playerList, "Full moon tonight.", NamedTextColor.YELLOW);
@@ -40,7 +40,7 @@ public class Scheduler {
                         // Do a dice roll to check if the players are THAT unlucky..
                         int chance = r.nextInt(2);
                         if (chance == 0) {
-                            Lunatic.bloodMoonToday = true;
+                            Lunamatic.bloodMoonToday = true;
                             PlayerMessage.Send(playerList, "Blood moon tonight.", NamedTextColor.DARK_RED);
                         } else {
                             PlayerMessage.Send(playerList, "New moon tonight.", NamedTextColor.DARK_GRAY);
@@ -52,8 +52,8 @@ public class Scheduler {
                     for (Player p : playerList) {
                         NightEffects.ApplyMoonlight(p, moonPhase, (24000 - (int)time));
                     }
-                    if (Lunatic.bloodMoonToday) {
-                        Lunatic.bloodMoonNow = true;
+                    if (Lunamatic.bloodMoonToday) {
+                        Lunamatic.bloodMoonNow = true;
                     }
                 }
             }

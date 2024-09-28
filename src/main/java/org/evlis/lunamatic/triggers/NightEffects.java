@@ -1,11 +1,11 @@
-package org.evlis.lunatic.triggers;
+package org.evlis.lunamatic.triggers;
 
 import io.papermc.paper.world.MoonPhase;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.evlis.lunatic.utilities.PlayerMessage;
+import org.evlis.lunamatic.utilities.PlayerMessage;
 
 public class NightEffects {
 
