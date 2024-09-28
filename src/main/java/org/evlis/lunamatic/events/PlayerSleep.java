@@ -19,6 +19,7 @@ public class PlayerSleep implements Listener {
         Player player = event.getPlayer();
         World world = player.getWorld();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
+
         if (Lunamatic.bloodMoonNow) {
             PlayerMessage.Send(player, "The blood moon pulls you back into the waking world! You cannot sleep!", NamedTextColor.RED);
             event.setCancelled(true);

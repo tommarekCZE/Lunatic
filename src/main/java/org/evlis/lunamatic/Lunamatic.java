@@ -22,6 +22,8 @@ public final class Lunamatic extends JavaPlugin {
         // Plugin startup logic
         Scheduler schedule = new Scheduler();
         playerJoin = new PlayerJoin();
+        playerSleep = new PlayerSleep();
+        entitySpawn = new EntitySpawn();
         Bukkit.getServer().getPluginManager().registerEvents(playerJoin, this);
         Bukkit.getServer().getPluginManager().registerEvents(playerSleep, this);
         Bukkit.getServer().getPluginManager().registerEvents(entitySpawn, this);

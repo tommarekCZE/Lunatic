@@ -19,8 +19,8 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         World world = player.getWorld();
-
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
+
         long time = world.getTime();
         if (moonPhase == MoonPhase.FULL_MOON) {
             PlayerMessage.Send(player, "Full moon tonight.", NamedTextColor.YELLOW);
