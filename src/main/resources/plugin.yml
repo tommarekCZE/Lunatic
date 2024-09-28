@@ -1,0 +1,5 @@
+name: Lunatic
+version: '0.1.1'
+main: org.evlis.lunatic.Lunatic
+api-version: '1.21'
+load: STARTUP

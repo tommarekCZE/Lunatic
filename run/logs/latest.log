@@ -1,0 +1,40 @@
+[00:16:44] [ServerMain/INFO]: [bootstrap] Running Java 21 (Java HotSpot(TM) 64-Bit Server VM 21.0.4+8-LTS-274; Oracle Corporation null) on Windows 10 10.0 (amd64)
+[00:16:44] [ServerMain/INFO]: [bootstrap] Loading Paper 1.21.1-105-master@b7ab22d (2024-09-27T18:16:58Z) for Minecraft 1.21.1
+[00:16:45] [ServerMain/INFO]: [PluginInitializerManager] Initializing plugins...
+[00:16:45] [Paper Plugin Remapper Thread - 2/INFO]: [PluginRemapper] Remapping plugin 'C:\Users\hrshe\code\Lunatic\build\libs\Lunatic-0.1.0.jar'...
+[00:16:45] [Paper Plugin Remapper Thread - 2/INFO]: [PluginRemapper] Done remapping plugin 'C:\Users\hrshe\code\Lunatic\build\libs\Lunatic-0.1.0.jar' in 303ms.
+[00:16:45] [ServerMain/INFO]: [PluginInitializerManager] Initialized 1 plugin
+[00:16:45] [ServerMain/INFO]: [PluginInitializerManager] Bukkit plugins (1):
+ - Lunatic (0.1.0)
+[00:16:48] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[00:16:49] [ServerMain/INFO]: Loaded 1290 recipes
+[00:16:49] [ServerMain/INFO]: Loaded 1399 advancements
+[00:16:49] [Server thread/INFO]: Starting minecraft server version 1.21.1
+[00:16:49] [Server thread/INFO]: Loading properties
+[00:16:49] [Server thread/INFO]: This server is running Paper version 1.21.1-105-master@b7ab22d (2024-09-27T18:16:58Z) (Implementing API version 1.21.1-R0.1-SNAPSHOT)
+[00:16:50] [Server thread/INFO]: [spark] This server bundles the spark profiler. For more information please visit https://docs.papermc.io/paper/profiling
+[00:16:50] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[00:16:50] [Server thread/INFO]: Using 4 threads for Netty based IO
+[00:16:50] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 3 worker threads, and population gen parallelism of 3 threads
+[00:16:51] [Server thread/INFO]: Default game type: SURVIVAL
+[00:16:51] [Server thread/INFO]: Generating keypair
+[00:16:51] [Server thread/INFO]: Starting Minecraft server on *:25565
+[00:16:51] [Server thread/INFO]: Using default channel type
+[00:16:51] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[00:16:51] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[00:16:51] [Server thread/INFO]: [Lunatic] Loading server plugin Lunatic v0.1.0
+[00:16:51] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[00:16:51] [Server thread/INFO]: [Lunatic] Enabling Lunatic v0.1.0
+[00:16:51] [Server thread/INFO]: Preparing level "world"
+[00:16:51] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[00:16:52] [Server thread/INFO]: Time elapsed: 588 ms
+[00:16:52] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[00:16:52] [Server thread/INFO]: Time elapsed: 94 ms
+[00:16:52] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[00:16:52] [Server thread/INFO]: Time elapsed: 55 ms
+[00:16:52] [Server thread/INFO]: [spark] Starting background profiler...
+[00:16:52] [Server thread/INFO]: [spark] The async-profiler engine is not supported for your os/arch (windows10/amd64), so the built-in Java engine will be used instead.
+[00:16:52] [Server thread/INFO]: Done preparing level "world" (1.115s)
+[00:16:52] [Server thread/INFO]: Running delayed init tasks
+[00:16:52] [Server thread/INFO]: Done (8.385s)! For help, type "help"
+[00:16:52] [Server thread/INFO]: Timings Reset

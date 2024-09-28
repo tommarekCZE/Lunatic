@@ -19,3 +19,24 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# User-specific stuff
+.idea/
+
+*.iml
+*.ipr
+*.iws
+
+# IntelliJ
+out/
+
+# Compiled class file
+*.class
+
+# Package Files #
+*.jar
+
+target/
+
+release.properties
+buildNumber.properties
