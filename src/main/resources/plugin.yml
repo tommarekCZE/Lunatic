@@ -1,5 +1,5 @@
-name: Moonstruck
-version: '0.1.2'
+name: Lunamatic
+version: ${version}
 main: org.evlis.lunamatic.Lunamatic
 api-version: '1.21'
 folia-supported: true

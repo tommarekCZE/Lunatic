@@ -24,14 +24,18 @@ public class PlayerJoin implements Listener {
         long time = world.getTime();
         if (moonPhase == MoonPhase.FULL_MOON) {
             PlayerMessage.Send(player, "Full moon tonight.", NamedTextColor.YELLOW);
-            NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (int)time);
+            if (time >= 12610) {
+                NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (int)time);
+            }
         } else if (moonPhase == MoonPhase.NEW_MOON) {
             if (Lunamatic.bloodMoonToday) {
                 PlayerMessage.Send(player, "Blood moon tonight.", NamedTextColor.DARK_RED);
             } else {
                 PlayerMessage.Send(player, "New moon tonight.", NamedTextColor.DARK_GRAY);
             }
-            NightEffects.ApplyMoonlight(player, MoonPhase.NEW_MOON, (24000 - (int)time));
+            if (time >= 12610) {
+                NightEffects.ApplyMoonlight(player, MoonPhase.NEW_MOON, (24000 - (int)time));
+            }
         }
     }
 }
