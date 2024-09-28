@@ -1,6 +1,6 @@
 name: Moonstruck
 version: '0.1.2'
-main: org.evlis.lunamatic.lunamatic
+main: org.evlis.lunamatic.Lunamatic
 api-version: '1.21'
 folia-supported: true
 load: STARTUP
