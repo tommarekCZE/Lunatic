@@ -11,10 +11,10 @@ public class NightEffects {
 
     public static void ApplyMoonlight(Player player, MoonPhase moonPhase, Integer timeTilDawn) {
         if (moonPhase == MoonPhase.FULL_MOON) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, timeTilDawn, 1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, timeTilDawn, 0));
             PlayerMessage.Send(player, "You feel lucky!", NamedTextColor.DARK_GREEN);
         } else if (moonPhase == MoonPhase.NEW_MOON) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, timeTilDawn, 1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, timeTilDawn, 0));
             PlayerMessage.Send(player, "You feel wary...", NamedTextColor.DARK_PURPLE);
         }
 
