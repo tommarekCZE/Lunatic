@@ -29,6 +29,8 @@ gradle-app.setting
 
 # IntelliJ
 out/
+# Run-Task
+run/
 
 # Compiled class file
 *.class

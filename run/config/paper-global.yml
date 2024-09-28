@@ -110,6 +110,9 @@ spam-limiter:
 spark:
   enable-immediately: false
   enabled: true
+threaded-regions:
+  grid-exponent: 2
+  threads: -1
 timings:
   enabled: false
   hidden-config-entries:
