@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import io.papermc.paper.world.MoonPhase;
 import net.kyori.adventure.text.format.NamedTextColor;
 
+import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.triggers.NightEffects;
 import org.evlis.lunamatic.utilities.PlayerMessage;
@@ -28,7 +29,7 @@ public class PlayerJoin implements Listener {
                 NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (int)time);
             }
         } else if (moonPhase == MoonPhase.NEW_MOON) {
-            if (Lunamatic.bloodMoonToday) {
+            if (GlobalVars.bloodMoonToday) {
                 PlayerMessage.Send(player, "Blood moon tonight.", NamedTextColor.DARK_RED);
             } else {
                 PlayerMessage.Send(player, "New moon tonight.", NamedTextColor.DARK_GRAY);

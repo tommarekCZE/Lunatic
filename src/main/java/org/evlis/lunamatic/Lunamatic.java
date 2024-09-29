@@ -10,8 +10,6 @@ import org.evlis.lunamatic.triggers.Scheduler;
 
 public final class Lunamatic extends JavaPlugin {
 
-    public static Boolean bloodMoonToday = false;
-    public static Boolean bloodMoonNow = false;
     public PlayerJoin playerJoin;
     public PlayerSleep playerSleep;
     public EntitySpawn entitySpawn;

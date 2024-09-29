@@ -7,6 +7,7 @@ import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.jetbrains.annotations.NotNull;
@@ -30,9 +31,12 @@ public class Scheduler {
                 // Check if it's the start of the day (0 ticks, 6am)
                 if (time >= 0 && time < 20) {
                     @NotNull MoonPhase moonPhase = world.getMoonPhase();
-                    Lunamatic.bloodMoonToday = false;
-                    Lunamatic.bloodMoonNow = false;
-                    if (moonPhase == MoonPhase.FULL_MOON) {
+                    GlobalVars.bloodMoonToday = false;
+                    GlobalVars.bloodMoonNow = false;
+                    if (GlobalVars.debug) {
+                        PlayerMessage.Send(playerList, "DEBUG Mode Enabled: Constant Blood Moon", NamedTextColor.WHITE);
+                        GlobalVars.bloodMoonToday = true;
+                    } else if (moonPhase == MoonPhase.FULL_MOON) {
                         // TO-DO: Implement Harvest Moon
                         PlayerMessage.Send(playerList, "Full moon tonight.", NamedTextColor.YELLOW);
                     } else if (moonPhase == MoonPhase.NEW_MOON) {
@@ -40,7 +44,7 @@ public class Scheduler {
                         // Do a dice roll to check if the players are THAT unlucky..
                         int chance = r.nextInt(2);
                         if (chance == 0) {
-                            Lunamatic.bloodMoonToday = true;
+                            GlobalVars.bloodMoonToday = true;
                             PlayerMessage.Send(playerList, "Blood moon tonight.", NamedTextColor.DARK_RED);
                         } else {
                             PlayerMessage.Send(playerList, "New moon tonight.", NamedTextColor.DARK_GRAY);
@@ -52,8 +56,8 @@ public class Scheduler {
                     for (Player p : playerList) {
                         NightEffects.ApplyMoonlight(p, moonPhase, (24000 - (int)time));
                     }
-                    if (Lunamatic.bloodMoonToday) {
-                        Lunamatic.bloodMoonNow = true;
+                    if (GlobalVars.bloodMoonToday) {
+                        GlobalVars.bloodMoonNow = true;
                     }
                 }
             }

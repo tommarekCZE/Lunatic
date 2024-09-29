@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "uuid": "158823a3-4644-47d9-9036-7b80a0097677",
+    "name": "Ialonus",
+    "level": 4,
+    "bypassesPlayerLimit": false
+  }
+]
