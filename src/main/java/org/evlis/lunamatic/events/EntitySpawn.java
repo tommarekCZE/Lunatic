@@ -26,9 +26,9 @@ public class EntitySpawn implements Listener {
 
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent event) {
+        Entity entity = event.getEntity();
+        World world = entity.getWorld();
         if (GlobalVars.bloodMoonNow) {
-            Entity entity = event.getEntity();
-            World world = entity.getWorld();
             Difficulty difficulty = world.getDifficulty();
             long time = world.getTime();
             if (entity instanceof Monster) { // Check if the entity is a hostile mob
@@ -42,13 +42,23 @@ public class EntitySpawn implements Listener {
                     // Emmiters to consider: SCULK_SOUL, PORTAL, WITCH, WHITE_ASH
                     monster.getWorld().spawnParticle(Particle.WITCH, mobLocation, 30);
                     // make all monsters faster and expand field of view
-                    monster.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (24000 - (int)time), potionAmp));
-                    monster.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, (24000 - (int)time), potionAmp));
+                    int ticksTilDawn = 24000 - (int)time;
+                    monster.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, ticksTilDawn, potionAmp));
+                    monster.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, ticksTilDawn, potionAmp));
                     // equip a random chainmail armor
                     equipRandomChainmailArmor(monster, armorCount);
                     // target nearest player
                     monster.setTarget(nearestPlayer);
                 }
+            }
+        } else if (GlobalVars.harvestMoonNow) {
+            // don't allow monster spawning during harvest moon
+            if (entity instanceof Monster) {
+                event.setCancelled(true);
+            } else if (entity instanceof Bee) {
+                long time = world.getTime();
+                // stop bees from entering hives during harvest moon
+                ((Bee) entity).setCannotEnterHiveTicks(24000 - (int)time);
             }
         }
     }

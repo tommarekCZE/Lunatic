@@ -13,6 +13,8 @@ public class GlobalVars {
     public static Boolean harvestMoonToday = false;
     // is there a blood moon RIGHT NOW?
     public static Boolean bloodMoonNow = false;
+    // is there a harvest moon RIGHT NOW?
+    public static Boolean harvestMoonNow = false;
     // how far should monsters engage the player from during a blood moon?
     public static final double bloodmoonDetectionRange = 32.0;
     public static final Map<Difficulty, Integer> difficultyArmorMap = Map.of(

@@ -38,6 +38,7 @@ public class Scheduler {
                     // Reset defaults every dawn
                     totoroDance.setRandomTickSpeed(world, 3);
                     GlobalVars.harvestMoonToday = false;
+                    GlobalVars.harvestMoonNow = false;
                     GlobalVars.bloodMoonToday = false;
                     GlobalVars.bloodMoonNow = false;
                     // get the moon phase tonight
@@ -49,7 +50,7 @@ public class Scheduler {
                     } else if (moonPhase == MoonPhase.FULL_MOON) {
                         // Do a dice roll to check if we're getting a harvest moon?
                         int chance = r.nextInt(2);
-                        if (true) { //chance == 0
+                        if (chance == 0) {
                             GlobalVars.harvestMoonToday = true;
                             PlayerMessage.Send(playerList, "Harvest moon tonight.", NamedTextColor.GOLD);
                         } else {
@@ -66,15 +67,17 @@ public class Scheduler {
                         }
                     }
                 }
-                // Execute immediatly before light levels decrease
-                if (time >= 12020 && time < 12040) {
+                // Execute immediately before the start of dusk
+                if (time >= 12180 && time < 12200) {
                     if (GlobalVars.harvestMoonToday) {
+                        GlobalVars.harvestMoonNow = true;
                         totoroDance.setRandomTickSpeed(world, 30);
-                        totoroDance.scheduleTimeSplit(plugin);
+                        totoroDance.setClearSkies(world, (24000 - (int)time));
+                        PlayerMessage.Send(playerList, "You.. hear grass growing?", NamedTextColor.GOLD);
                     }
                 }
-                // Execute at exactly dusk
-                if (time >= 12610 && time < 12630) {
+                // Execute exactly at the start of night
+                if (time >= 12980 && time < 13000) {
                     @NotNull MoonPhase moonPhase = world.getMoonPhase();
                     for (Player p : playerList) {
                         NightEffects.ApplyMoonlight(p, moonPhase, (24000 - (int)time));
