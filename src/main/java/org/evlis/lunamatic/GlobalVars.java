@@ -6,9 +6,11 @@ import java.util.Map;
 
 public class GlobalVars {
     // Test flag, makes every night a bloodmoon if true
-    public static Boolean debug = true;
+    public static Boolean debug = false;
     // is there a blood moon today?
     public static Boolean bloodMoonToday = false;
+    // is there a harvest moon today?
+    public static Boolean harvestMoonToday = false;
     // is there a blood moon RIGHT NOW?
     public static Boolean bloodMoonNow = false;
     // how far should monsters engage the player from during a blood moon?

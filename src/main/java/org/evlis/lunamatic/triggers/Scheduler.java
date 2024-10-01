@@ -8,8 +8,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
-import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.utilities.PlayerMessage;
+import org.evlis.lunamatic.utilities.TotoroDance;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -19,6 +19,11 @@ public class Scheduler {
 
     public void GetOmens(Plugin plugin) {
         GlobalRegionScheduler globalRegionScheduler = plugin.getServer().getGlobalRegionScheduler();
+        // generate new dice
+        Random r = new Random();
+        // get methods for Harvest moon
+        TotoroDance totoroDance = new TotoroDance();
+
         globalRegionScheduler.runAtFixedRate(plugin, (t)-> {
             for (World world : Bukkit.getWorlds()) {
                 // Check if the world has active players
@@ -30,17 +35,27 @@ public class Scheduler {
                 long time = world.getTime();
                 // Check if it's the start of the day (0 ticks, 6am)
                 if (time >= 0 && time < 20) {
-                    @NotNull MoonPhase moonPhase = world.getMoonPhase();
+                    // Reset defaults every dawn
+                    totoroDance.setRandomTickSpeed(world, 3);
+                    GlobalVars.harvestMoonToday = false;
                     GlobalVars.bloodMoonToday = false;
                     GlobalVars.bloodMoonNow = false;
+                    // get the moon phase tonight
+                    @NotNull MoonPhase moonPhase = world.getMoonPhase();
+                    // handle debugging flag
                     if (GlobalVars.debug) {
                         PlayerMessage.Send(playerList, "DEBUG Mode Enabled: Constant Blood Moon", NamedTextColor.WHITE);
                         GlobalVars.bloodMoonToday = true;
                     } else if (moonPhase == MoonPhase.FULL_MOON) {
-                        // TO-DO: Implement Harvest Moon
-                        PlayerMessage.Send(playerList, "Full moon tonight.", NamedTextColor.YELLOW);
+                        // Do a dice roll to check if we're getting a harvest moon?
+                        int chance = r.nextInt(2);
+                        if (true) { //chance == 0
+                            GlobalVars.harvestMoonToday = true;
+                            PlayerMessage.Send(playerList, "Harvest moon tonight.", NamedTextColor.GOLD);
+                        } else {
+                            PlayerMessage.Send(playerList, "Full moon tonight.", NamedTextColor.YELLOW);
+                        }
                     } else if (moonPhase == MoonPhase.NEW_MOON) {
-                        Random r = new Random();
                         // Do a dice roll to check if the players are THAT unlucky..
                         int chance = r.nextInt(2);
                         if (chance == 0) {
@@ -50,7 +65,15 @@ public class Scheduler {
                             PlayerMessage.Send(playerList, "New moon tonight.", NamedTextColor.DARK_GRAY);
                         }
                     }
-                } // Execute at exactly dusk
+                }
+                // Execute immediatly before light levels decrease
+                if (time >= 12020 && time < 12040) {
+                    if (GlobalVars.harvestMoonToday) {
+                        totoroDance.setRandomTickSpeed(world, 30);
+                        totoroDance.scheduleTimeSplit(plugin);
+                    }
+                }
+                // Execute at exactly dusk
                 if (time >= 12610 && time < 12630) {
                     @NotNull MoonPhase moonPhase = world.getMoonPhase();
                     for (Player p : playerList) {
