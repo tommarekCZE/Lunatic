@@ -10,6 +10,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
+import org.evlis.lunamatic.utilities.Nightwalker;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +23,7 @@ public class EntitySpawn implements Listener {
 
     // Custom detection range in blocks (default is 16 for most mobs)
     private static final double BLODMOON_DETECTION_RANGE = 32.0;
-    private final Random random = new Random();
+    private final Nightwalker nightwalker = new Nightwalker();
 
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent event) {
@@ -33,6 +34,10 @@ public class EntitySpawn implements Listener {
             long time = world.getTime();
             if (entity instanceof Monster) { // Check if the entity is a hostile mob
                 Monster monster = (Monster) entity;
+                if (monster instanceof Creeper) {
+                    event.setCancelled(true);
+                    nightwalker.SummonVex(event.getLocation());
+                }
                 Location mobLocation = monster.getLocation();
                 Player nearestPlayer = findNearestPlayer(mobLocation);
                 if (nearestPlayer != null) {

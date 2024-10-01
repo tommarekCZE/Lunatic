@@ -67,8 +67,8 @@ public class Scheduler {
                         }
                     }
                 }
-                // Execute immediately before the start of dusk
-                if (time >= 12180 && time < 12200) {
+                // Execute immediately after sunset starts
+                if (time >= 12010 && time < 12030) {
                     if (GlobalVars.harvestMoonToday) {
                         GlobalVars.harvestMoonNow = true;
                         totoroDance.setRandomTickSpeed(world, 30);
