@@ -1,6 +1,7 @@
 package org.evlis.lunamatic.triggers;
 
 import io.papermc.paper.world.MoonPhase;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
@@ -35,6 +36,9 @@ public class Scheduler {
                 long time = world.getTime();
                 // Check if it's the start of the day (0 ticks, 6am)
                 if (time >= 0 && time < 20) {
+                    if (GlobalVars.debug) {
+                        plugin.getComponentLogger().debug(Component.text("Resetting defaults for the day..."));
+                    }
                     // Reset defaults every dawn
                     totoroDance.setRandomTickSpeed(world, 3);
                     GlobalVars.harvestMoonToday = false;
@@ -44,10 +48,7 @@ public class Scheduler {
                     // get the moon phase tonight
                     @NotNull MoonPhase moonPhase = world.getMoonPhase();
                     // handle debugging flag
-                    if (GlobalVars.debug) {
-                        PlayerMessage.Send(playerList, "DEBUG Mode Enabled: Constant Blood Moon", NamedTextColor.WHITE);
-                        GlobalVars.bloodMoonToday = true;
-                    } else if (moonPhase == MoonPhase.FULL_MOON) {
+                    if (moonPhase == MoonPhase.FULL_MOON) {
                         // Do a dice roll to check if we're getting a harvest moon?
                         int chance = r.nextInt(2);
                         if (chance == 0) {
