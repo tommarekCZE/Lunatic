@@ -20,25 +20,10 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-# User-specific stuff
-.idea/
-
-*.iml
-*.ipr
-*.iws
+# Run-Task
+run/*
+!run/eula.txt
 
 # IntelliJ
 out/
-# Run-Task
-run/
-
-# Compiled class file
-*.class
-
-# Package Files #
-*.jar
-
-target/
-
-release.properties
-buildNumber.properties
+.idea/
