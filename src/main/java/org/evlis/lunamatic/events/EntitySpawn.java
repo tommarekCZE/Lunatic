@@ -60,10 +60,14 @@ public class EntitySpawn implements Listener {
             // don't allow monster spawning during harvest moon
             if (entity instanceof Monster) {
                 event.setCancelled(true);
-            } else if (entity instanceof Bee) {
+            } else if (entity instanceof Bee bee) {
                 long time = world.getTime();
                 // stop bees from entering hives during harvest moon
-                ((Bee) entity).setCannotEnterHiveTicks(24000 - (int)time);
+                bee.setCannotEnterHiveTicks(24000 - (int)time);
+                // give the bee nectar so it can pollinate
+                bee.setHasNectar(true);
+                // reset bee pollination count
+                bee.setCropsGrownSincePollination(0);
             }
         }
     }

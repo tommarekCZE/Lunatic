@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.evlis'
-version = '0.3.3'
+version = '0.3.5'
 
 repositories {
     mavenCentral()
@@ -65,41 +65,7 @@ runServer {
     // Your plugin's jar (or shadowJar if present) will be used automatically.
     minecraftVersion("1.21.1")
 }
+
 runPaper.folia.registerTask() {
     minecraftVersion("1.20.6")
-}
-
-tasks.register("testWithServer") {
-    dependsOn("jar") // Ensure the plugin is built
-
-    doLast {
-        // Run the Minecraft server using the latest version of your plugin
-        tasks.runServer {
-            minecraftVersion("1.21.1")
-        }
-
-        // Wait for server startup and check log for plugin load confirmation
-        File logFile = file("run/logs/latest.log")
-
-        // Poll the log file until it's found (or timeout)
-        waitForLogMessage(logFile, "[Lunamatic] Enabling Lunamatic", 30)
-    }
-}
-
-// Function to poll the log file and check for the plugin load message
-def waitForLogMessage(File logFile, String message, int timeoutSeconds) {
-    def startTime = System.currentTimeMillis()
-    def found = false
-
-    while (System.currentTimeMillis() - startTime < timeoutSeconds * 1000) {
-        if (logFile.exists() && logFile.text.contains(message)) {
-            found = true
-            break
-        }
-        sleep(1000) // wait for a second and retry
-    }
-
-    if (!found) {
-        throw new GradleException("Plugin did not load as expected within the timeout period!")
-    }
 }

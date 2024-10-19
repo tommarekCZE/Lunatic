@@ -7,23 +7,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.event.world.TimeSkipEvent;
 import org.evlis.lunamatic.GlobalVars;
-import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerSleep implements Listener {
+import java.util.List;
 
+public class TimeSkip implements Listener {
     @EventHandler
-    public void onPlayerSleep(PlayerBedEnterEvent event) {
-        Player player = event.getPlayer();
-        World world = player.getWorld();
+    public void onSleepyTimeSkip(TimeSkipEvent event) {
+        World world = event.getWorld();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
 
-        if (GlobalVars.bloodMoonNow) {
-            PlayerMessage.Send(player, "The blood moon shines! You cannot sleep!", NamedTextColor.RED);
-            event.setCancelled(true);
+        if (event.getSkipReason() == TimeSkipEvent.SkipReason.NIGHT_SKIP && (moonPhase ==  MoonPhase.FULL_MOON || moonPhase == MoonPhase.NEW_MOON)) {
+            List<Player> players = world.getPlayers();
+            for (Player p : players) {
+                p.clearActivePotionEffects();
+            }
         }
     }
 }
