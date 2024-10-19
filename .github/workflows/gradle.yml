@@ -36,10 +36,10 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
-    - name: Build with Gradle Wrapper
+    - name: Clean the Server Plugins Cache
       run: ./gradlew cleanPaperPluginsCache
 
-    - name: Build with Gradle Wrapper
+    - name: Run the Paper Server
       run: ./gradlew runServer
 
     - name: Check the Server Logs
