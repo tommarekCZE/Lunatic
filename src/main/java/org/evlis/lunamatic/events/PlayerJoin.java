@@ -26,7 +26,7 @@ public class PlayerJoin implements Listener {
         if (moonPhase == MoonPhase.FULL_MOON) {
             PlayerMessage.Send(player, "Full moon tonight.", NamedTextColor.YELLOW);
             if (time >= 12610) {
-                NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (int)time);
+                NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (24000 - (int)time));
             }
         } else if (moonPhase == MoonPhase.NEW_MOON) {
             if (GlobalVars.bloodMoonToday) {
