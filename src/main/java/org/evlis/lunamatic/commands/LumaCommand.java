@@ -22,7 +22,7 @@ public class LumaCommand extends BaseCommand {
     }
 
     @Subcommand("status")
-    @CommandPermission("myplugin.command.status")
+    @CommandPermission("luma.command.status")
     @Description("Displays the status of plugin variables")
     public void onStatus(CommandSender sender) {
         // Display GlobalVars status
