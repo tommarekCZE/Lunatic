@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.utilities.PlayerMessage;
+import org.evlis.lunamatic.utilities.ResetFlags;
 import org.evlis.lunamatic.utilities.TotoroDance;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,11 +41,9 @@ public class Scheduler {
                         plugin.getComponentLogger().debug(Component.text("Resetting defaults for the day..."));
                     }
                     // Reset defaults every dawn
-                    totoroDance.setRandomTickSpeed(world, 3);
-                    GlobalVars.harvestMoonToday = false;
-                    GlobalVars.harvestMoonNow = false;
-                    GlobalVars.bloodMoonToday = false;
-                    GlobalVars.bloodMoonNow = false;
+                    ResetFlags.resetAll();
+                    ResetFlags.resetTickSpeed(world);
+
                     // get the moon phase tonight
                     @NotNull MoonPhase moonPhase = world.getMoonPhase();
                     // handle debugging flag
@@ -70,8 +69,13 @@ public class Scheduler {
                 }
                 // Execute immediately after sunset starts
                 if (time >= 12010 && time < 12030) {
-                    if (GlobalVars.harvestMoonToday && !GlobalVars.bloodMoonNow) {
+                    if (GlobalVars.harvestMoonToday && !GlobalVars.harvestMoonNow) {
                         GlobalVars.harvestMoonNow = true;
+                        // Ensure global var reset
+                        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                            ResetFlags.resetTickSpeed(world);
+                        }, 24000 - (int)time);
+                        plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
                         totoroDance.setRandomTickSpeed(world, 30);
                         totoroDance.setClearSkies(world, (24000 - (int)time));
                         PlayerMessage.Send(playerList, "You.. hear grass growing?", NamedTextColor.GOLD);
@@ -89,6 +93,8 @@ public class Scheduler {
                     }
                     if (GlobalVars.bloodMoonToday && !GlobalVars.bloodMoonNow) {
                         GlobalVars.bloodMoonNow = true;
+                        // Ensure global var reset
+                        plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
                     } else { // if for some reason both flags are still true, we have an invalid state
                         plugin.getComponentLogger().debug(Component.text("Invalid blood moon detected!"));
                         GlobalVars.bloodMoonToday = false;

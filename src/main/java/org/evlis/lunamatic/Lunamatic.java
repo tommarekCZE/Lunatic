@@ -1,7 +1,9 @@
 package org.evlis.lunamatic;
 
+import co.aikar.commands.PaperCommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.evlis.lunamatic.commands.LumaCommand;
 import org.evlis.lunamatic.events.*;
 import org.evlis.lunamatic.triggers.Scheduler;
 
@@ -31,11 +33,17 @@ public final class Lunamatic extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(playerQuit, this);
         Bukkit.getServer().getPluginManager().registerEvents(playerSleep, this);
         Bukkit.getServer().getPluginManager().registerEvents(entitySpawn, this);
+        registerCommands();
         schedule.GetOmens(this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public void registerCommands() {
+        PaperCommandManager manager = new PaperCommandManager(this);
+        manager.registerCommand(new LumaCommand(this));
     }
 }
