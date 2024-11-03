@@ -1,6 +1,7 @@
 package org.evlis.lunamatic;
 
 import co.aikar.commands.PaperCommandManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evlis.lunamatic.commands.LumaCommand;
@@ -22,6 +23,8 @@ public final class Lunamatic extends JavaPlugin {
     public void onEnable() {
         //consoleLogger.sendMessage(MiniMessage.miniMessage().deserialize(""));
         // Plugin startup logic
+        saveDefaultConfig();
+        // Class Initialization
         Scheduler schedule = new Scheduler();
         timeSkip = new TimeSkip();
         playerJoin = new PlayerJoin();
@@ -34,16 +37,35 @@ public final class Lunamatic extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(playerSleep, this);
         Bukkit.getServer().getPluginManager().registerEvents(entitySpawn, this);
         registerCommands();
+        loadGlobalConfig();
         schedule.GetOmens(this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        this.getComponentLogger().debug(Component.text("Lunamatic has been disabled."));
     }
 
     public void registerCommands() {
         PaperCommandManager manager = new PaperCommandManager(this);
         manager.registerCommand(new LumaCommand(this));
+    }
+
+    public void loadGlobalConfig() {
+        try {
+            reloadConfig();
+            // moons enabled
+            GlobalVars.disabledWorlds = getConfig().getStringList("disabledWorlds");
+            GlobalVars.fullMoonEnabled = getConfig().getBoolean("fullMoonEnabled");
+            GlobalVars.fullMoonEnabled = getConfig().getBoolean("newMoonEnabled");
+            GlobalVars.fullMoonEnabled = getConfig().getBoolean("harvestMoonEnabled");
+            GlobalVars.fullMoonEnabled = getConfig().getBoolean("bloodMoonEnabled");
+            // moon chances
+            GlobalVars.harvestMoonDieSides = getConfig().getInt("bloodMoonDieSides");
+            GlobalVars.bloodMoonDieSides = getConfig().getInt("harvestMoonDieSides");
+        } catch (Exception e) {
+            getLogger().severe("Failed to load configuration: " + e.getMessage());
+        }
     }
 }

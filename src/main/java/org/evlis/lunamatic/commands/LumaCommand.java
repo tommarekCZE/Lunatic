@@ -21,14 +21,30 @@ public class LumaCommand extends BaseCommand {
         sender.sendMessage("You are running Lunamatic v" + plugin.getPluginMeta().getVersion());
     }
 
+    @Subcommand("reload")
+    @CommandPermission("luma.command.reload")
+    @Description("Reloads the plugin configuration")
+    public void onReload(CommandSender sender) {
+        // Display GlobalVars status
+        try {
+            plugin.reloadConfig();
+            sender.sendMessage("Lunamatic reload successful!");
+        } catch (Exception e) {
+            sender.sendMessage("Lunamatic encountered an error: " + e.getMessage());
+        }
+    }
+
     @Subcommand("status")
     @CommandPermission("luma.command.status")
     @Description("Displays the status of plugin variables")
     public void onStatus(CommandSender sender) {
         // Display GlobalVars status
+        sender.sendMessage("Blood Moon Enabled: " + GlobalVars.bloodMoonEnabled);
         sender.sendMessage("Blood Moon Now: " + GlobalVars.bloodMoonNow);
         sender.sendMessage("Blood Moon Today: " + GlobalVars.bloodMoonToday);
+        sender.sendMessage("Harvest Moon Enabled: " + GlobalVars.harvestMoonEnabled);
         sender.sendMessage("Harvest Moon Now: " + GlobalVars.harvestMoonNow);
         sender.sendMessage("Harvest Moon Today: " + GlobalVars.harvestMoonToday);
+        sender.sendMessage("Disabled worlds: " + String.join(", ", GlobalVars.disabledWorlds));
     }
 }
