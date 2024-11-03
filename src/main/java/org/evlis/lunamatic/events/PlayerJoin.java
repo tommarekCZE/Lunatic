@@ -12,6 +12,7 @@ import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.triggers.NightEffects;
 import org.evlis.lunamatic.utilities.PlayerMessage;
+import org.evlis.lunamatic.utilities.ResetFlags;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerJoin implements Listener {
@@ -20,22 +21,30 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         World world = player.getWorld();
-        @NotNull MoonPhase moonPhase = world.getMoonPhase();
+        if (world.getPlayers().isEmpty()) {
+            ResetFlags.resetAll();
+        } else {
+            @NotNull MoonPhase moonPhase = world.getMoonPhase();
 
-        long time = world.getTime();
-        if (moonPhase == MoonPhase.FULL_MOON) {
-            PlayerMessage.Send(player, "Full moon tonight.", NamedTextColor.YELLOW);
-            if (time >= 12610) {
-                NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (24000 - (int)time));
-            }
-        } else if (moonPhase == MoonPhase.NEW_MOON) {
-            if (GlobalVars.bloodMoonToday) {
-                PlayerMessage.Send(player, "Blood moon tonight.", NamedTextColor.DARK_RED);
-            } else {
-                PlayerMessage.Send(player, "New moon tonight.", NamedTextColor.DARK_GRAY);
-            }
-            if (time >= 12610) {
-                NightEffects.ApplyMoonlight(player, MoonPhase.NEW_MOON, (24000 - (int)time));
+            long time = world.getTime();
+            if (moonPhase == MoonPhase.FULL_MOON) {
+                if (GlobalVars.harvestMoonToday) {
+                    PlayerMessage.Send(player, "Harvest moon tonight.", NamedTextColor.GOLD);
+                } else {
+                    PlayerMessage.Send(player, "Full moon tonight.", NamedTextColor.YELLOW);
+                }
+                if (time >= 12610) {
+                    NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (24000 - (int)time));
+                }
+            } else if (moonPhase == MoonPhase.NEW_MOON) {
+                if (GlobalVars.bloodMoonToday) {
+                    PlayerMessage.Send(player, "Blood moon tonight.", NamedTextColor.DARK_RED);
+                } else {
+                    PlayerMessage.Send(player, "New moon tonight.", NamedTextColor.DARK_GRAY);
+                }
+                if (time >= 12610) {
+                    NightEffects.ApplyMoonlight(player, MoonPhase.NEW_MOON, (24000 - (int)time));
+                }
             }
         }
     }
