@@ -33,6 +33,9 @@ public class Scheduler {
                 if (playerList.isEmpty()) {
                     continue; // Skip worlds with no active players
                 }
+                if (GlobalVars.disabledWorlds.contains(world.getName())) {
+                    continue; // Skip worlds on the disabled list
+                }
 
                 long time = world.getTime();
                 // Check if it's the start of the day (0 ticks, 6am)
@@ -47,19 +50,19 @@ public class Scheduler {
                     // get the moon phase tonight
                     @NotNull MoonPhase moonPhase = world.getMoonPhase();
                     // handle debugging flag
-                    if (moonPhase == MoonPhase.FULL_MOON) {
+                    if (moonPhase == MoonPhase.FULL_MOON && GlobalVars.fullMoonEnabled) {
                         // Do a dice roll to check if we're getting a harvest moon?
-                        int chance = r.nextInt(2);
-                        if (chance == 0) {
+                        int chance = r.nextInt(GlobalVars.harvestMoonDieSides);
+                        if (chance == 0 && GlobalVars.harvestMoonEnabled) {
                             GlobalVars.harvestMoonToday = true;
                             PlayerMessage.Send(playerList, "Harvest moon tonight.", NamedTextColor.GOLD);
                         } else {
                             PlayerMessage.Send(playerList, "Full moon tonight.", NamedTextColor.YELLOW);
                         }
-                    } else if (moonPhase == MoonPhase.NEW_MOON) {
+                    } else if (moonPhase == MoonPhase.NEW_MOON && GlobalVars.newMoonEnabled) {
                         // Do a dice roll to check if the players are THAT unlucky..
-                        int chance = r.nextInt(2);
-                        if (chance == 0) {
+                        int chance = r.nextInt(GlobalVars.bloodMoonDieSides);
+                        if (chance == 0 && GlobalVars.bloodMoonEnabled) {
                             GlobalVars.bloodMoonToday = true;
                             PlayerMessage.Send(playerList, "Blood moon tonight.", NamedTextColor.DARK_RED);
                         } else {
