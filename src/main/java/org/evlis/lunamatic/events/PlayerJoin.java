@@ -22,11 +22,15 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
         World world = player.getWorld();
         if (world.getPlayers().isEmpty()) {
+            // If the world was empty, there is a chance flags are stuck from
+            // the world state the last player left at. Clear all flags to
+            // prevent invalid moon states.
             ResetFlags.resetAll();
         } else {
             @NotNull MoonPhase moonPhase = world.getMoonPhase();
-
             long time = world.getTime();
+            // harvest moon & blood moon are subsets of the full and new moons,
+            // currently cannot be separated without a code rewrite.
             if (moonPhase == MoonPhase.FULL_MOON) {
                 if (GlobalVars.harvestMoonToday) {
                     PlayerMessage.Send(player, "Harvest moon tonight.", NamedTextColor.GOLD);

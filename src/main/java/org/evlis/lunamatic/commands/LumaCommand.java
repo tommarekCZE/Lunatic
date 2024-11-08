@@ -2,9 +2,13 @@ package org.evlis.lunamatic.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
+import io.papermc.paper.world.MoonPhase;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
+import org.jetbrains.annotations.NotNull;
 
 @CommandAlias("luma")
 public class LumaCommand extends BaseCommand {
@@ -37,14 +41,19 @@ public class LumaCommand extends BaseCommand {
     @Subcommand("status")
     @CommandPermission("luma.command.status")
     @Description("Displays the status of plugin variables")
-    public void onStatus(CommandSender sender) {
+    public void onStatus(Player player) {
+        // this command is player only!!!
+        // get the current world & moon state:
+        World world = player.getWorld();
+        @NotNull MoonPhase moonPhase = world.getMoonPhase();
         // Display GlobalVars status
-        sender.sendMessage("Blood Moon Enabled: " + GlobalVars.bloodMoonEnabled);
-        sender.sendMessage("Blood Moon Now: " + GlobalVars.bloodMoonNow);
-        sender.sendMessage("Blood Moon Today: " + GlobalVars.bloodMoonToday);
-        sender.sendMessage("Harvest Moon Enabled: " + GlobalVars.harvestMoonEnabled);
-        sender.sendMessage("Harvest Moon Now: " + GlobalVars.harvestMoonNow);
-        sender.sendMessage("Harvest Moon Today: " + GlobalVars.harvestMoonToday);
-        sender.sendMessage("Disabled worlds: " + String.join(", ", GlobalVars.disabledWorlds));
+        player.sendMessage("Blood Moon Enabled: " + GlobalVars.bloodMoonEnabled);
+        player.sendMessage("Blood Moon Now: " + GlobalVars.bloodMoonNow);
+        player.sendMessage("Blood Moon Today: " + GlobalVars.bloodMoonToday);
+        player.sendMessage("Harvest Moon Enabled: " + GlobalVars.harvestMoonEnabled);
+        player.sendMessage("Harvest Moon Now: " + GlobalVars.harvestMoonNow);
+        player.sendMessage("Harvest Moon Today: " + GlobalVars.harvestMoonToday);
+        player.sendMessage("Disabled worlds: " + String.join(", ", GlobalVars.disabledWorlds));
+        player.sendMessage("Current moon phase for world " + world.getName() + ": " + moonPhase);
     }
 }
