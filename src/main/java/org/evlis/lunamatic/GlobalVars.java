@@ -1,5 +1,6 @@
 package org.evlis.lunamatic;
 
+import io.papermc.paper.world.MoonPhase;
 import org.bukkit.Difficulty;
 
 import java.util.List;
@@ -41,5 +42,27 @@ public class GlobalVars {
             Difficulty.EASY, 0,
             Difficulty.NORMAL, 1,
             Difficulty.HARD, 2
+    );
+    // map for time between current moon phase and the next new moon
+    public static final Map<MoonPhase, Integer> newMoonOffset = Map.of(
+            MoonPhase.FULL_MOON, 96000,
+            MoonPhase.WANING_GIBBOUS, 72000,
+            MoonPhase.LAST_QUARTER, 48000,
+            MoonPhase.WANING_CRESCENT, 24000,
+            MoonPhase.NEW_MOON, 0,
+            MoonPhase.WAXING_CRESCENT, 120000,
+            MoonPhase.FIRST_QUARTER, 144000,
+            MoonPhase.WAXING_GIBBOUS, 168000
+    );
+    // map for time between current moon phase and the next full moon
+    public static final Map<MoonPhase, Integer> fullMoonOffset = Map.of(
+            MoonPhase.FULL_MOON, 0,
+            MoonPhase.WANING_GIBBOUS, 168000,
+            MoonPhase.LAST_QUARTER, 144000,
+            MoonPhase.WANING_CRESCENT, 120000,
+            MoonPhase.NEW_MOON, 96000,
+            MoonPhase.WAXING_CRESCENT, 72000,
+            MoonPhase.FIRST_QUARTER, 48000,
+            MoonPhase.WAXING_GIBBOUS, 24000
     );
 }
