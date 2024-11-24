@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public class GlobalVars {
-    // Test flag, makes every night a bloodmoon if true
+    // Test flag
     public static Boolean debug = false;
+    // Check for updates?
+    public static Boolean checkUpdates = true;
     // enabled moons:
     public static Boolean fullMoonEnabled = true;
     public static Boolean harvestMoonEnabled = true;

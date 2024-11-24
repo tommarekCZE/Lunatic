@@ -1,19 +1,21 @@
 ### Lunamatic configuration ###
-# Choose which moon effects to enable,
-# for blood moons, new moon must be enabled,
-# and for harvest moons the full moon must be enabled.
+# Choose which moon effects to enable
 fullMoonEnabled: true
 newMoonEnabled: true
+## Ignored unless fullMoonEnabled == true
 harvestMoonEnabled: true
+## Ignored unless newMoonEnabled == true
 bloodMoonEnabled: true
-### Chance for Blood and Harvest Moons ###
+# Chance for Blood and Harvest Moons ###
 # This sets the number of sides in the dice roll,
-# e.g. 2 = cointoss (50/50), 6 = normal die (17% chance)
+# e.g. 2 = coin-toss (50/50), 6 = normal die (17% chance)
 bloodMoonDieSides: 2
 harvestMoonDieSides: 2
-### Set worlds to disable moon-effects on ###
-# by default both nether & the_end cannot have moon effects
+# Set worlds to disable moon-effects on ###
+# by design both nether & the_end cannot have moon effects
 disabledWorlds:
   - world
   - world_nether
   - world_the_end
+# Do you want to check for updates at server start?
+checkForUpdates: true
