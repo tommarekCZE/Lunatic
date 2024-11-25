@@ -49,6 +49,10 @@ public class PlayerJoin implements Listener {
                 if (time >= 12610) {
                     NightEffects.ApplyMoonlight(player, MoonPhase.NEW_MOON, (24000 - (int)time));
                 }
+            } else {
+                // Catch for stuck flags during wrong moon-phase..
+                // TO-DO: find out why this is needed?
+                ResetFlags.resetAll();
             }
         }
     }

@@ -8,7 +8,6 @@ public class ResetFlags {
     static TotoroDance totoroDance = new TotoroDance();
 
     public static void resetAll() {
-
         GlobalVars.harvestMoonToday = false;
         GlobalVars.harvestMoonNow = false;
         GlobalVars.bloodMoonToday = false;
