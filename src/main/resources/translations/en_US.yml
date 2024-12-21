@@ -14,6 +14,8 @@ cmd_reload_success: "Lunamatic reload successful!"
 cmd_reload_fail: "Lunamatic encountered an error: "
 cmd_reload_warn: "By reloading the Lunamatic, some issues could occur.\nUse reload only for testing purposes."
 
+cmd_lang: "Loaded Language: "
+
 cmd_blood_moon_enabled: "Blood Moon Enabled: "
 cmd_blood_moon_now: "Blood Moon Now: "
 cmd_blood_moon_today: "Blood Moon Today: "

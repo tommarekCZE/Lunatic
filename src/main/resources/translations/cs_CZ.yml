@@ -14,6 +14,8 @@ cmd_reload_success: "Znovu načtení Lunamaticu proběhlo úspěšně!"
 cmd_reload_fail: "Při znovu načítání Lunamaticu se vyskytla chyba! Cbyba: "
 cmd_reload_warn: "Po provedení znovu načtení se můžou vyskytnou různé potíže.\nPoužívejte znovu načtení jenom při testování."
 
+cmd_lang: "Načtený jazyk: "
+
 cmd_blood_moon_enabled: "Povolení Krvavého měsíce: "
 cmd_blood_moon_now: "Krvavý měsíc právě probíhá: "
 cmd_blood_moon_today: "Krvavý měsíc dnes: "

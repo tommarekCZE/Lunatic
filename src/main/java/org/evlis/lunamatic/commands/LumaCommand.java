@@ -88,6 +88,7 @@ public class LumaCommand extends BaseCommand {
         World world = player.getWorld();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
         // Display GlobalVars status
+        player.sendMessage(getTranslationManager().getTranslation("cmd_lang") + GlobalVars.lang);
         player.sendMessage(getTranslationManager().getTranslation("cmd_blood_moon_enabled") + GlobalVars.bloodMoonEnabled);
         player.sendMessage(getTranslationManager().getTranslation("cmd_blood_moon_now") + GlobalVars.bloodMoonNow);
         player.sendMessage(getTranslationManager().getTranslation("cmd_blood_moon_today") + GlobalVars.bloodMoonToday);
