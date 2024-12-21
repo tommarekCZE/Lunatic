@@ -11,6 +11,8 @@ public class GlobalVars {
     public static Boolean debug = false;
     // Check for updates?
     public static Boolean checkUpdates = true;
+    //
+    public static String lang = "en_US";
     // enabled moons:
     public static Boolean fullMoonEnabled = true;
     public static Boolean harvestMoonEnabled = true;

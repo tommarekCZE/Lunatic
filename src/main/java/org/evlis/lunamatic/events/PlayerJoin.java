@@ -13,12 +13,13 @@ import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.triggers.NightEffects;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.evlis.lunamatic.utilities.ResetFlags;
+import org.evlis.lunamatic.utilities.TranslationManager;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerJoin implements Listener {
-
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        TranslationManager translationManager = TranslationManager.getInstance();
         Player player = event.getPlayer();
         World world = player.getWorld();
         if (world.getPlayers().isEmpty()) {
@@ -33,18 +34,18 @@ public class PlayerJoin implements Listener {
             // currently cannot be separated without a code rewrite.
             if (moonPhase == MoonPhase.FULL_MOON) {
                 if (GlobalVars.harvestMoonToday) {
-                    PlayerMessage.Send(player, "Harvest moon tonight.", NamedTextColor.GOLD);
+                    PlayerMessage.Send(player, translationManager.getTranslation("harvest_moon_tonight"), NamedTextColor.GOLD);
                 } else {
-                    PlayerMessage.Send(player, "Full moon tonight.", NamedTextColor.YELLOW);
+                    PlayerMessage.Send(player, translationManager.getTranslation("full_moon_tonight"), NamedTextColor.YELLOW);
                 }
                 if (time >= 12610) {
                     NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (24000 - (int)time));
                 }
             } else if (moonPhase == MoonPhase.NEW_MOON) {
                 if (GlobalVars.bloodMoonToday) {
-                    PlayerMessage.Send(player, "Blood moon tonight.", NamedTextColor.DARK_RED);
+                    PlayerMessage.Send(player, translationManager.getTranslation("blood_moon_tonight"), NamedTextColor.DARK_RED);
                 } else {
-                    PlayerMessage.Send(player, "New moon tonight.", NamedTextColor.DARK_GRAY);
+                    PlayerMessage.Send(player, translationManager.getTranslation("new_moon_tonight"), NamedTextColor.DARK_GRAY);
                 }
                 if (time >= 12610) {
                     NightEffects.ApplyMoonlight(player, MoonPhase.NEW_MOON, (24000 - (int)time));
