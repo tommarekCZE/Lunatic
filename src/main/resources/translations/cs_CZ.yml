@@ -1,47 +1,32 @@
-# Czech translation, by Thomas Marek (tommarek)
-
+#Default english translation, Use as template for translating!
 lang_load_success: "Bravo! Jazyk cs_CZ byl načten úspěšně!"
-
 plugin_success_load: "Plugin Lunamatic byl načten úspěsně! Verze: "
-
 update_check: "Hledám aktulizace..."
 update_found: "Nová verze %a je k dispozici! (vaše verze: v%b)! Novou verzi stáhňete zde: https://modrinth.com/plugin/lunamatic"
 update_error: "Chyba při hledání aktulizace: "
-
 cmd_running: "Aktuální verze Lunamatic: "
-
 cmd_reload_success: "Znovu načtení Lunamaticu proběhlo úspěšně!"
 cmd_reload_fail: "Při znovu načítání Lunamaticu se vyskytla chyba! Cbyba: "
 cmd_reload_warn: "Po provedení znovu načtení se můžou vyskytnou různé potíže.\nPoužívejte znovu načtení jenom při testování."
-
 cmd_lang: "Načtený jazyk: "
-
 cmd_blood_moon_enabled: "Povolení Krvavého měsíce: "
 cmd_blood_moon_now: "Krvavý měsíc právě probíhá: "
 cmd_blood_moon_today: "Krvavý měsíc dnes: "
-
 cmd_harv_moon_enabled: "Povolení Úrodného měsíce: "
 cmd_harv_moon_now: "Úrodný měsíc právě probíhá: "
 cmd_harv_moon_today: "Úrodný měsíc dnes: "
-
 cmd_disabled_worlds: "Světy ve kterých je Lutematic vyplý: "
 cmd_curr_phase: "Momentální fáze měsíce: "
-
 sched_invalid_blood: "Neplatný krvavý měsíc! Vybírání měsíce bude přeskočeno..."
 sched_invalid_harv: "Neplatný úrodný měsíc! Vybírání měsíce bude přeskočeno..."
-
 sched_daydef_reset: "Resetuji výchozí nastavení pro daný den..."
-
 harvest_moon_tonight: "Dnes večer očekávejte měsíc úrody."
 full_moon_tonight: "Dnes večer bude viditelný úplněk na obloze."
 blood_moon_tonight: "Dnes večer očekávejte krvavý měsíc."
 new_moon_tonight: "Dnes večer bude měsíc ve fázi novu."
-
 grass_growing: "Psstt.. Slyšíš tu trávu rúst?"
 lucky_feel: "Cítíš se šťasně!"
 wary_feel: "Být tebou, byl bych více ostražitý..."
-
 blood_moon_sleep: "Jsi hodně rozrušený kvůli Krvavého měsíce. Možná by si měl raději strážit..."
-
-# DO NOT CHANGE THIS VARIABLE! Mismatch of lang_ver can cause some of the translations missing.
+#DO NOT CHANGE THIS VARIABLE! Mismatch of lang_ver can cause some of the translations missing.
 lang_ver: "2"
