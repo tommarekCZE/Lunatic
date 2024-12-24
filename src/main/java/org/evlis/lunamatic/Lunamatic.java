@@ -12,7 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.evlis.lunamatic.commands.LumaCommand;
 import org.evlis.lunamatic.events.*;
 import org.evlis.lunamatic.triggers.Scheduler;
-
 import org.evlis.lunamatic.utilities.TranslationManager;
 
 import java.io.InputStreamReader;
