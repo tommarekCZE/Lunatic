@@ -32,16 +32,16 @@ sched_invalid_harv: "Neplatný úrodný měsíc! Vybírání měsíce bude přes
 
 sched_daydef_reset: "Resetuji výchozí nastavení pro daný den..."
 
-harvest_moon_tonight: "Dnes očekávejte měsíc Úrody na obloze."
+harvest_moon_tonight: "Dnes očekávejte měsíc úrody na obloze."
 full_moon_tonight: "Dnes bude viditelný úplněk na obloze."
-blood_moon_tonight: "Dnes očekávejte Krvavý měsíc na obloze"
+blood_moon_tonight: "Dnes očekávejte krvavý měsíc na obloze."
 new_moon_tonight: "Dnes bude měsíc ve fázi novu."
 
 grass_growing: "Psstt.. Slyšíš tu trávu rúst?"
 lucky_feel: "Cítíš se šťasně!"
 wary_feel: "Být tebou, byl bych více ostražitý..."
 
-blood_moon_sleep: "Jsi hodně rozrušený kvůli Krvavého měsíce. Možná by si měl radši strážit..."
+blood_moon_sleep: "Jsi hodně rozrušený kvůli Krvavého měsíce. Možná by si měl raději strážit..."
 
 # DO NOT CHANGE THIS VARIABLE! Mismatch of lang_ver can cause some of the translations missing.
 lang_ver: "2"
