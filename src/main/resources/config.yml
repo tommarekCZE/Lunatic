@@ -1,4 +1,10 @@
 ### Lunamatic configuration ###
+
+#Choose plugin language, you can find all of supported translations in plugins/lunamatic/translations
+#You can create your own translations, by copying the English one, renaming and translating the language file.
+#Contribute your translations here: https://github.com/Ifiht/Lunatic
+lang: "en_US"
+
 # Choose which moon effects to enable
 fullMoonEnabled: true
 newMoonEnabled: true
@@ -14,7 +20,6 @@ harvestMoonDieSides: 2
 # Set worlds to disable moon-effects on ###
 # by design both nether & the_end cannot have moon effects
 disabledWorlds:
-  - world
   - world_nether
   - world_the_end
 # Do you want to check for updates at server start?

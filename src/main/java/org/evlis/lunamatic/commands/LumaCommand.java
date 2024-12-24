@@ -3,6 +3,9 @@ package org.evlis.lunamatic.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import io.papermc.paper.world.MoonPhase;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,20 +13,28 @@ import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.utilities.ResetFlags;
 import org.jetbrains.annotations.NotNull;
+import org.evlis.lunamatic.utilities.TranslationManager;
+import org.evlis.lunamatic.Lunamatic;
+import org.evlis.lunamatic.utilities.PlayerMessage;
+
+import static org.evlis.lunamatic.Lunamatic.REQUIRED_LANG_VER;
 
 @CommandAlias("luma")
 public class LumaCommand extends BaseCommand {
-
     private final Plugin plugin; // stores the reference to your main plugin
 
     public LumaCommand(Plugin plugin) {
         this.plugin = plugin;
     }
 
+    private TranslationManager getTranslationManager() {
+        return TranslationManager.getInstance(); // Always fetch the latest instance
+    }
+
     @Default
     public void defCommand(CommandSender sender) {
         // Display GlobalVars status
-        sender.sendMessage("You are running Lunamatic v" + plugin.getPluginMeta().getVersion());
+        sender.sendMessage(getTranslationManager().getTranslation("cmd_running") + plugin.getPluginMeta().getVersion());
     }
 
     @Subcommand("reload")
@@ -33,9 +44,38 @@ public class LumaCommand extends BaseCommand {
         // Display GlobalVars status
         try {
             plugin.reloadConfig();
-            sender.sendMessage("Lunamatic reload successful!");
+            Lunamatic.getInstance().loadGlobalConfig();
+
+            TranslationManager.initialize(plugin.getDataFolder(),GlobalVars.lang);
+
+            getTranslationManager().loadTranslations();
+
+            if (!getTranslationManager().doesTranslationExist(GlobalVars.lang)) {
+                plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + GlobalVars.lang + " language does NOT exists! Disabling plugin.");
+                sender.sendMessage("Error occurred while loading language! Check console.");
+                Lunamatic.getInstance().troubleShootLang();
+                Bukkit.getPluginManager().disablePlugin(plugin);
+                return;
+            }
+
+            if (Integer.parseInt(getTranslationManager().getTranslation("lang_ver")) != REQUIRED_LANG_VER) {
+                plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + "Unsupported language version! Disabling plugin. Expected lang ver: "+REQUIRED_LANG_VER);
+                sender.sendMessage("Error occurred while loading language! Check console.");
+                Lunamatic.getInstance().troubleShootLang();
+                Bukkit.getPluginManager().disablePlugin(plugin);
+                return;
+            }
+
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.GREEN + getTranslationManager().getTranslation("lang_load_success"));
+            sender.sendMessage(getTranslationManager().getTranslation("cmd_reload_success"));
+            if (sender instanceof Player) {
+                PlayerMessage.Send((Player) sender,getTranslationManager().getTranslation("cmd_reload_warn"), NamedTextColor.YELLOW);
+            } else {
+                plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + GlobalVars.lang + getTranslationManager().getTranslation("cmd_reload_warn"));
+            }
+
         } catch (Exception e) {
-            sender.sendMessage("Lunamatic encountered an error: " + e.getMessage());
+            sender.sendMessage(getTranslationManager().getTranslation("cmd_reload_fail") + e.getMessage());
         }
     }
 
@@ -48,14 +88,15 @@ public class LumaCommand extends BaseCommand {
         World world = player.getWorld();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
         // Display GlobalVars status
-        player.sendMessage("Blood Moon Enabled: " + GlobalVars.bloodMoonEnabled);
-        player.sendMessage("Blood Moon Now: " + GlobalVars.bloodMoonNow);
-        player.sendMessage("Blood Moon Today: " + GlobalVars.bloodMoonToday);
-        player.sendMessage("Harvest Moon Enabled: " + GlobalVars.harvestMoonEnabled);
-        player.sendMessage("Harvest Moon Now: " + GlobalVars.harvestMoonNow);
-        player.sendMessage("Harvest Moon Today: " + GlobalVars.harvestMoonToday);
-        player.sendMessage("Disabled worlds: " + String.join(", ", GlobalVars.disabledWorlds));
-        player.sendMessage("Current moon phase for world " + world.getName() + ": " + moonPhase);
+        player.sendMessage(getTranslationManager().getTranslation("cmd_lang") + GlobalVars.lang);
+        player.sendMessage(getTranslationManager().getTranslation("cmd_blood_moon_enabled") + GlobalVars.bloodMoonEnabled);
+        player.sendMessage(getTranslationManager().getTranslation("cmd_blood_moon_now") + GlobalVars.bloodMoonNow);
+        player.sendMessage(getTranslationManager().getTranslation("cmd_blood_moon_today") + GlobalVars.bloodMoonToday);
+        player.sendMessage(getTranslationManager().getTranslation("cmd_harv_moon_enabled") + GlobalVars.harvestMoonEnabled);
+        player.sendMessage(getTranslationManager().getTranslation("cmd_harv_moon_now") + GlobalVars.harvestMoonNow);
+        player.sendMessage(getTranslationManager().getTranslation("cmd_harv_moon_today") + GlobalVars.harvestMoonToday);
+        player.sendMessage(getTranslationManager().getTranslation("cmd_disabled_worlds") + String.join(", ", GlobalVars.disabledWorlds));
+        player.sendMessage(getTranslationManager().getTranslation("cmd_curr_phase") + world.getName() + ": " + moonPhase);
     }
 
     @Subcommand("makebloodmoon")

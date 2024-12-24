@@ -1,0 +1,47 @@
+# Default english translation, Use as template for translating!
+
+lang_load_success: "Bingo! en_US language successfully loaded!"
+
+plugin_success_load: "Successfully enabled Lunamatic v"
+
+update_check: "Checking for updates..."
+update_found: "New version %a available (you are on v%b)! Download here: https://modrinth.com/plugin/lunamatic"
+update_error: "Unable to check for updates: "
+
+cmd_running: "You are running Lunamatic v"
+
+cmd_reload_success: "Lunamatic reload successful!"
+cmd_reload_fail: "Lunamatic encountered an error: "
+cmd_reload_warn: "By reloading the Lunamatic, some issues could occur.\nUse reload only for testing purposes."
+
+cmd_lang: "Loaded Language: "
+
+cmd_blood_moon_enabled: "Blood Moon Enabled: "
+cmd_blood_moon_now: "Blood Moon Now: "
+cmd_blood_moon_today: "Blood Moon Today: "
+
+cmd_harv_moon_enabled: "Harvest Moon Enabled: "
+cmd_harv_moon_now: "Harvest Moon Now: "
+cmd_harv_moon_today: "Harvest Moon Today: "
+
+cmd_disabled_worlds: "Disabled worlds: "
+cmd_curr_phase: "Current moon phase for world "
+
+sched_invalid_blood: "Invalid blood moon detected! Skipping..."
+sched_invalid_harv: "Invalid harvest moon detected! Skipping..."
+
+sched_daydef_reset: "Resetting defaults for the day..."
+
+harvest_moon_tonight: "Harvest moon tonight."
+full_moon_tonight: "Full moon tonight."
+blood_moon_tonight: "Blood moon tonight."
+new_moon_tonight: "New moon tonight."
+
+grass_growing: "You.. hear grass growing?"
+lucky_feel: "You feel lucky!"
+wary_feel: "You feel wary..."
+
+blood_moon_sleep: "The blood moon shines! You cannot sleep!"
+
+# DO NOT CHANGE THIS VARIABLE! Mismatch of lang_ver can cause some of the translations missing.
+lang_ver: "2"

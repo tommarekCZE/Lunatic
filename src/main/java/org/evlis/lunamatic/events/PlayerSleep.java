@@ -12,17 +12,18 @@ import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.jetbrains.annotations.NotNull;
+import org.evlis.lunamatic.utilities.TranslationManager;
 
 public class PlayerSleep implements Listener {
-
     @EventHandler
     public void onPlayerSleep(PlayerBedEnterEvent event) {
+        TranslationManager translationManager = TranslationManager.getInstance();
         Player player = event.getPlayer();
         World world = player.getWorld();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
 
         if (GlobalVars.bloodMoonNow) {
-            PlayerMessage.Send(player, "The blood moon shines! You cannot sleep!", NamedTextColor.RED);
+            PlayerMessage.Send(player, translationManager.getTranslation("blood_moon_sleep"), NamedTextColor.RED);
             event.setCancelled(true);
         }
     }
