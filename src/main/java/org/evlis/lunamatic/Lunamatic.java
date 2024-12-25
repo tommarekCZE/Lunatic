@@ -48,7 +48,7 @@ public final class Lunamatic extends JavaPlugin {
     @Override
     public void onEnable() {
         // Begin Initialization
-        this.getComponentLogger().debug(Component.text("Loading Lunamatic...", NamedTextColor.GOLD));
+        getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.GOLD + "Loading Lunamatic...");
 
         // Assing instance variable
         instance = this;
