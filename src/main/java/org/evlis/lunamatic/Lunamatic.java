@@ -58,7 +58,7 @@ public final class Lunamatic extends JavaPlugin {
         String currentVersion = this.getPluginMeta().getVersion();
         // Check server version, log error if not supported.
         if (!serverVersion.startsWith(REQUIRED_VERSION)) {
-            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + "Unsupported server version detected! Expected ver: "+REQUIRED_VERSION+", Your version: "+serverVersion);
+            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + "Unsupported server version detected! Expected ver: "+REQUIRED_VERSION+", Your version: " + serverVersion);
             getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + "Expect unexpected behaviours or crashes!, It is recommended to use expected version!");
         }
         // Config Initialization
@@ -80,7 +80,7 @@ public final class Lunamatic extends JavaPlugin {
 
 
         if (Integer.parseInt(translationManager.getTranslation("lang_ver")) != REQUIRED_LANG_VER) {
-            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + "Unsupported language version! Disabling plugin. Expected lang ver: "+REQUIRED_LANG_VER);
+            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + "Unsupported language version! Disabling plugin. Expected lang ver: " + REQUIRED_LANG_VER);
             troubleShootLang();
             Bukkit.getPluginManager().disablePlugin(this);
             return;

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.evlis"
-version = "1.1.0"
+version = "1.1.1"
 
 val targetJavaVersion = 21
 
@@ -56,7 +56,7 @@ tasks.withType<JavaCompile>().all {
 
 tasks {
     processResources {
-        val props = mapOf("version" to "version")
+        val props = mapOf("version" to version)
         inputs.properties(props)
         filteringCharset = "UTF-8"
         filesMatching("plugin.yml") {
