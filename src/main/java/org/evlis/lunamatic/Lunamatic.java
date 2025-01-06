@@ -4,53 +4,51 @@ import co.aikar.commands.PaperCommandManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.evlis.lunamatic.commands.LumaCommand;
 import org.evlis.lunamatic.events.*;
 import org.evlis.lunamatic.triggers.Scheduler;
-import org.evlis.lunamatic.utilities.TranslationManager;
+import org.evlis.lunamatic.utilities.LangManager;
+import org.evlis.lunamatic.utilities.LogHandler;
 
 import java.io.InputStreamReader;
 import java.lang.module.ModuleDescriptor;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-//getComponentLogger dosent output anything! Fixed that with getServer().getConsoleSender().sendMessage
 
 public final class Lunamatic extends JavaPlugin {
-    //private final ConsoleCommandSender consoleLogger = getServer().getConsoleSender();
     private static Lunamatic instance;
-    public TranslationManager translationManager;
+    public LangManager langManager;
 
     public TimeSkip timeSkip;
     public PlayerJoin playerJoin;
     public PlayerQuit playerQuit;
     public PlayerSleep playerSleep;
     public EntitySpawn entitySpawn;
-    //public final Logger logger = this.getLogger();
-    //public final File configFile = new File(this.getDataFolder(), "config.yml");
+    private static final Logger logger = Logger.getLogger(Lunamatic.class.getName());
     private static final String REQUIRED_VERSION = "1.21";
     public static final int REQUIRED_LANG_VER = 2;
-    private static final String API_URL = "https://api.modrinth.com/v2/project/lunamatic/version";
-
-    public void troubleShootLang() {
-        getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + "---Language Troubleshoot Guide---\n1. If you recently updated Lunamatic, it is recommended to delete plugins/Lunamatic/translations folder. (To allow Lunamatic to use recent translation files)\n2. Check for wrong entered language name in Lunamatic/config.yml\n3. If you were messing with the translations files, you might forget to update the lang_ver value.");
-    }
-
-    public void troubleShootConfig() {
-        getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + "---Config Troubleshoot Guide---\n1. If you recently updated Lunamatic, it is recommended to delete plugins/Lunamatic/config.yml file. (To allow Lunamatic to use recent config version)\n2. You might did some typos in Lunamatic/config.yml");
-    }
+    private static final String API_URL = """
+            https://api.modrinth.com/v2/project/lunamatic/version""";
 
     @Override
     public void onEnable() {
         // Begin Initialization
-        getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.GOLD + "Loading Lunamatic...");
+        //Logger logger = getLogger();
+        logger.info("Begin plugin initialization...");
+        logger.setUseParentHandlers(false); // Disable parent handlers to avoid duplicate logging
+        LogHandler handler = new LogHandler();
+        handler.setLevel(Level.ALL);
+        logger.addHandler(handler);
 
-        // Assing instance variable
+
+
+        // Assign instance variable
         instance = this;
 
         // Get versions
@@ -58,35 +56,31 @@ public final class Lunamatic extends JavaPlugin {
         String currentVersion = this.getPluginMeta().getVersion();
         // Check server version, log error if not supported.
         if (!serverVersion.startsWith(REQUIRED_VERSION)) {
-            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + "Unsupported server version detected! Expected ver: "+REQUIRED_VERSION+", Your version: " + serverVersion);
-            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + "Expect unexpected behaviours or crashes!, It is recommended to use expected version!");
+            logger.info("Unsupported server version detected! Expected ver: " + REQUIRED_VERSION + ", Your version: " + serverVersion);
         }
         // Config Initialization
         saveDefaultConfig();
         loadGlobalConfig();
 
         // Load translations
-        TranslationManager.initialize(getDataFolder(),GlobalVars.lang);
-        translationManager = TranslationManager.getInstance();
-        translationManager.saveDefaultTranslations();
-        translationManager.loadTranslations();
+        LangManager.initialize(getDataFolder(),GlobalVars.lang);
+        langManager = LangManager.getInstance();
+        langManager.saveDefaultTranslations();
+        langManager.loadTranslations();
 
-        if (!translationManager.doesTranslationExist(GlobalVars.lang)) {
-            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + GlobalVars.lang + " language does NOT exists! Disabling plugin.");
-            troubleShootLang();
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
+        if (!langManager.doesTranslationExist(GlobalVars.lang)) {
+            logger.info(GlobalVars.lang + " language does NOT exist! Falling back to the default language (en_US).");
+            GlobalVars.lang = "en_US"; // Set to default language
+            langManager.loadTranslations(); // Reload translations
         }
 
-
-        if (Integer.parseInt(translationManager.getTranslation("lang_ver")) != REQUIRED_LANG_VER) {
-            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + "Unsupported language version! Disabling plugin. Expected lang ver: " + REQUIRED_LANG_VER);
-            troubleShootLang();
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
+        if (Integer.parseInt(langManager.getTranslation("lang_ver")) != REQUIRED_LANG_VER) {
+            logger.info("Unsupported language version! Falling back to the default language (en_US).");
+            GlobalVars.lang = "en_US"; // Set to default language
+            langManager.loadTranslations(); // Reload translations
         }
 
-        getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.GREEN + translationManager.getTranslation("lang_load_success"));
+        logger.info(langManager.getTranslation("lang_load_success"));
 
         // Update check
         if (GlobalVars.checkUpdates) {
@@ -108,13 +102,13 @@ public final class Lunamatic extends JavaPlugin {
 
         schedule.GetOmens(this);
         // Notify of successful plugin start
-        getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.GOLD + translationManager.getTranslation("plugin_success_load") + currentVersion);
+        logger.info(langManager.getTranslation("plugin_success_load") + currentVersion);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        this.getLogger().warning("Lunamatic has been disabled.");
+        logger.info("Lunamatic has been disabled.");
     }
 
     public void registerCommands() {
@@ -124,28 +118,39 @@ public final class Lunamatic extends JavaPlugin {
 
     public void loadGlobalConfig() {
         try {
-            reloadConfig();
-            // plugin vars
+            // Set default values for missing keys
+            getConfig().addDefault("checkForUpdates", true);
+            getConfig().addDefault("lang", "en_US");
+            getConfig().addDefault("disabledWorlds", new ArrayList<>()); // Default to an empty list
+            getConfig().addDefault("fullMoonEnabled", true);
+            getConfig().addDefault("newMoonEnabled", true);
+            getConfig().addDefault("harvestMoonEnabled", true);
+            getConfig().addDefault("bloodMoonEnabled", true);
+            getConfig().addDefault("bloodMoonDieSides", 2);
+            getConfig().addDefault("harvestMoonDieSides", 2);
+
+            // Apply defaults if missing
+            getConfig().options().copyDefaults(true);
+            saveConfig();
+
+            // Load values into GlobalVars
             GlobalVars.checkUpdates = getConfig().getBoolean("checkForUpdates");
             GlobalVars.lang = getConfig().getString("lang");
-            // moons enabled
             GlobalVars.disabledWorlds = getConfig().getStringList("disabledWorlds");
             GlobalVars.fullMoonEnabled = getConfig().getBoolean("fullMoonEnabled");
-            GlobalVars.fullMoonEnabled = getConfig().getBoolean("newMoonEnabled");
-            GlobalVars.fullMoonEnabled = getConfig().getBoolean("harvestMoonEnabled");
-            GlobalVars.fullMoonEnabled = getConfig().getBoolean("bloodMoonEnabled");
-            // moon chances
-            GlobalVars.harvestMoonDieSides = getConfig().getInt("bloodMoonDieSides");
-            GlobalVars.bloodMoonDieSides = getConfig().getInt("harvestMoonDieSides");
+            GlobalVars.newMoonEnabled = getConfig().getBoolean("newMoonEnabled");
+            GlobalVars.harvestMoonEnabled = getConfig().getBoolean("harvestMoonEnabled");
+            GlobalVars.bloodMoonEnabled = getConfig().getBoolean("bloodMoonEnabled");
+            GlobalVars.bloodMoonDieSides = getConfig().getInt("bloodMoonDieSides");
+            GlobalVars.harvestMoonDieSides = getConfig().getInt("harvestMoonDieSides");
         } catch (Exception e) {
-            getLogger().severe("Failed to load configuration! Disabling plugin. Error: " + e.getMessage());
-            troubleShootConfig();
+            logger.info("Failed to load configuration! Disabling plugin. Error: " + e.getMessage());
             Bukkit.getPluginManager().disablePlugin(this);
         }
     }
 
     public void checkForUpdates(String currentVersionString) {
-        getLogger().info(translationManager.getTranslation("update_check"));
+        logger.info(langManager.getTranslation("update_check"));
         try {
             // Open a connection to the API
             HttpURLConnection connection = (HttpURLConnection) new URL(API_URL).openConnection();
@@ -165,13 +170,16 @@ public final class Lunamatic extends JavaPlugin {
             ModuleDescriptor.Version latestVersion = ModuleDescriptor.Version.parse(latestVersionString);
             ModuleDescriptor.Version currentVersion = ModuleDescriptor.Version.parse(currentVersionString);
             if (currentVersion.compareTo(latestVersion) < 0) {
-                getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.GOLD + translationManager.getTranslation("update_found").replace("%a",latestVersionString).replace("%b",currentVersionString));
+                logger.info(langManager.getTranslation("update_found").replace("%a",latestVersionString).replace("%b",currentVersionString));
+            }
+            else {
+                logger.info("You are up to date!");
             }
 
             reader.close();
             connection.disconnect();
         } catch (Exception e) {
-            getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + translationManager.getTranslation("update_error"));
+            logger.info(langManager.getTranslation("update_error"));
         }
     }
 

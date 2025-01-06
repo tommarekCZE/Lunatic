@@ -1,6 +1,6 @@
 # Default english translation, Use as template for translating!
 
-lang_load_success: "Bingo! en_US language successfully loaded!"
+lang_load_success: "Language en_US loaded successfully!"
 
 plugin_success_load: "Successfully enabled Lunamatic v"
 
@@ -43,5 +43,5 @@ wary_feel: "You feel wary..."
 
 blood_moon_sleep: "The blood moon shines! You cannot sleep!"
 
-# DO NOT CHANGE THIS VARIABLE! Mismatch of lang_ver can cause some of the translations missing.
+# DO NOT CHANGE THIS VARIABLE! Mismatch of lang_ver can cause missing translations.
 lang_ver: "2"

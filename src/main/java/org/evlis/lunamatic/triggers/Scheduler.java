@@ -1,7 +1,6 @@
 package org.evlis.lunamatic.triggers;
 
 import io.papermc.paper.world.MoonPhase;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler;
@@ -13,15 +12,15 @@ import org.evlis.lunamatic.GlobalVars;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.evlis.lunamatic.utilities.ResetFlags;
 import org.evlis.lunamatic.utilities.TotoroDance;
-import org.evlis.lunamatic.utilities.TranslationManager;
+import org.evlis.lunamatic.utilities.LangManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Random;
 
 public class Scheduler {
-    private TranslationManager getTranslationManager() {
-        return TranslationManager.getInstance(); // Always fetch the latest instance
+    private LangManager getTranslationManager() {
+        return LangManager.getInstance(); // Always fetch the latest instance
     }
 
     public void GetOmens(Plugin plugin) {
