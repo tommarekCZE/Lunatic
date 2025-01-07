@@ -1,8 +1,8 @@
 [
   {
-    "uuid": "158823a3-4644-47d9-9036-7b80a0097677",
-    "name": "Ialonus",
+    "uuid": "371042d9-c50e-3d59-8c2c-1df553056625",
+    "name": "Ainz",
     "level": 4,
-    "bypassesPlayerLimit": false
+    "bypassesPlayerLimit": true
   }
 ]
