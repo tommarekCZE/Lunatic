@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class Scheduler {
     private LangManager getTranslationManager() {
@@ -29,6 +30,8 @@ public class Scheduler {
         Random r = new Random();
         // get methods for Harvest moon
         TotoroDance totoroDance = new TotoroDance();
+        // initialize logger
+        Logger logger = plugin.getLogger();
 
         globalRegionScheduler.runAtFixedRate(plugin, (t)-> {
             for (World world : Bukkit.getWorlds()) {
@@ -45,7 +48,7 @@ public class Scheduler {
                 // Check if it's the start of the day (0 ticks, 6am)
                 if (time >= 0 && time < 20) {
                     if (GlobalVars.debug) {
-                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + getTranslationManager().getTranslation("sched_daydef_reset"));
+                        logger.info(getTranslationManager().getTranslation("sched_daydef_reset"));
                     }
                     // Reset defaults every dawn
                     ResetFlags.resetAll();
@@ -87,7 +90,7 @@ public class Scheduler {
                         totoroDance.setClearSkies(world, (24000 - (int)time));
                         PlayerMessage.Send(playerList, getTranslationManager().getTranslation("grass_growing"), NamedTextColor.GOLD);
                     } else { // if for some reason both flags are still true, we have an invalid state
-                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + getTranslationManager().getTranslation("sched_invalid_harv"));
+                        logger.warning(getTranslationManager().getTranslation("sched_invalid_harv"));
                         GlobalVars.harvestMoonToday = false;
                         GlobalVars.harvestMoonNow = false;
                     }
@@ -103,7 +106,7 @@ public class Scheduler {
                         // Ensure global var reset
                         plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
                     } else { // if for some reason both flags are still true, we have an invalid state
-                        plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + getTranslationManager().getTranslation("sched_invalid_blood"));
+                        logger.warning(getTranslationManager().getTranslation("sched_invalid_blood"));
                         GlobalVars.bloodMoonToday = false;
                         GlobalVars.bloodMoonNow = false;
                     }

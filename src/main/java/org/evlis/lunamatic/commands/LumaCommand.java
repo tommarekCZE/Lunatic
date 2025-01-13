@@ -17,14 +17,18 @@ import org.evlis.lunamatic.utilities.LangManager;
 import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 
+import java.util.logging.Logger;
+
 import static org.evlis.lunamatic.Lunamatic.REQUIRED_LANG_VER;
 
 @CommandAlias("luma")
 public class LumaCommand extends BaseCommand {
     private final Plugin plugin; // stores the reference to your main plugin
+    private final Logger logger;
 
     public LumaCommand(Plugin plugin) {
         this.plugin = plugin;
+        logger = plugin.getLogger();
     }
 
     private LangManager getLangManager() {
@@ -46,30 +50,25 @@ public class LumaCommand extends BaseCommand {
             plugin.reloadConfig();
             Lunamatic.getInstance().loadGlobalConfig();
 
-            LangManager.initialize(plugin.getDataFolder(),GlobalVars.lang);
-
+            LangManager.initialize(plugin.getDataFolder(), GlobalVars.lang);
             getLangManager().loadTranslations();
 
             if (!getLangManager().doesTranslationExist(GlobalVars.lang)) {
-                plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + GlobalVars.lang + " language does NOT exists! Disabling plugin.");
-                sender.sendMessage("Error occurred while loading language! Check console.");
-                Bukkit.getPluginManager().disablePlugin(plugin);
-                return;
+                logger.info(GlobalVars.lang + " language does NOT exist! Falling back to the default language (en_US).");
+                GlobalVars.lang = "en_US"; // Set to default language
+                getLangManager().loadTranslations(); // Reload translations
             }
 
             if (Integer.parseInt(getLangManager().getTranslation("lang_ver")) != REQUIRED_LANG_VER) {
-                plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.RED + "Unsupported language version! Disabling plugin. Expected lang ver: "+REQUIRED_LANG_VER);
-                sender.sendMessage("Error occurred while loading language! Check console.");
-                Bukkit.getPluginManager().disablePlugin(plugin);
-                return;
+                logger.info("Unsupported language version! Falling back to the default language (en_US).");
             }
 
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.GREEN + getLangManager().getTranslation("lang_load_success"));
+            logger.info(getLangManager().getTranslation("lang_load_success"));
             sender.sendMessage(getLangManager().getTranslation("cmd_reload_success"));
             if (sender instanceof Player) {
                 PlayerMessage.Send((Player) sender,getLangManager().getTranslation("cmd_reload_warn"), NamedTextColor.YELLOW);
             } else {
-                plugin.getServer().getConsoleSender().sendMessage(ChatColor.WHITE + "[Lunamatic] " + ChatColor.RESET + ChatColor.YELLOW + GlobalVars.lang + getLangManager().getTranslation("cmd_reload_warn"));
+                logger.warning(GlobalVars.lang + getLangManager().getTranslation("cmd_reload_warn"));
             }
 
         } catch (Exception e) {
