@@ -1,8 +1,9 @@
 ### Lunamatic configuration ###
 
-#Choose plugin language, you can find all of supported translations in plugins/lunamatic/translations
+#Choose plugin language, you can find all of supported translations in plugins/lunamatic/lang
 #You can create your own translations, by copying the English one, renaming and translating the language file.
 #Contribute your translations here: https://github.com/Ifiht/Lunatic
+#Valid options: en_US, cs_CZ, de_DE
 lang: "en_US"
 
 # Choose which moon effects to enable

@@ -7,6 +7,7 @@ plugin_success_load: "Plugin Lunamatic byl načten úspěsně! Verze: "
 update_check: "Hledám aktulizace..."
 update_found: "Nová verze %a je k dispozici! (vaše verze: v%b)! Novou verzi stáhňete zde: https://modrinth.com/plugin/lunamatic"
 update_error: "Chyba při hledání aktulizace: "
+up_to_date: "Jste aktuální!"
 
 cmd_running: "Aktuální verze Lunamatic: "
 
@@ -42,6 +43,3 @@ lucky_feel: "Cítíš se šťasně!"
 wary_feel: "Být tebou, byl bych více ostražitý..."
 
 blood_moon_sleep: "Jsi hodně rozrušený kvůli Krvavého měsíce. Možná by si měl raději strážit..."
-
-# DO NOT CHANGE THIS VARIABLE! Mismatch of lang_ver can cause some of the translations missing.
-lang_ver: "2"

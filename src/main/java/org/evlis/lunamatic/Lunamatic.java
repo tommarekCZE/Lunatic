@@ -46,8 +46,6 @@ public final class Lunamatic extends JavaPlugin {
         handler.setLevel(Level.ALL);
         logger.addHandler(handler);
 
-
-
         // Assign instance variable
         instance = this;
 
@@ -63,19 +61,13 @@ public final class Lunamatic extends JavaPlugin {
         loadGlobalConfig();
 
         // Load translations
-        LangManager.initialize(getDataFolder(),GlobalVars.lang);
+        LangManager.initialize(this, getDataFolder(), GlobalVars.lang);
         langManager = LangManager.getInstance();
         langManager.saveDefaultTranslations();
         langManager.loadTranslations();
 
         if (!langManager.doesTranslationExist(GlobalVars.lang)) {
             logger.info(GlobalVars.lang + " language does NOT exist! Falling back to the default language (en_US).");
-            GlobalVars.lang = "en_US"; // Set to default language
-            langManager.loadTranslations(); // Reload translations
-        }
-
-        if (Integer.parseInt(langManager.getTranslation("lang_ver")) != REQUIRED_LANG_VER) {
-            logger.info("Unsupported language version! Falling back to the default language (en_US).");
             GlobalVars.lang = "en_US"; // Set to default language
             langManager.loadTranslations(); // Reload translations
         }
@@ -173,7 +165,7 @@ public final class Lunamatic extends JavaPlugin {
                 logger.info(langManager.getTranslation("update_found").replace("%a",latestVersionString).replace("%b",currentVersionString));
             }
             else {
-                logger.info("You are up to date!");
+                logger.info(langManager.getTranslation("up_to_date"));
             }
 
             reader.close();

@@ -2,5 +2,6 @@ name: Lunamatic
 version: ${version}
 main: org.evlis.lunamatic.Lunamatic
 api-version: '1.21'
+author: ifiht
 folia-supported: true
 load: STARTUP

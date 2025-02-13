@@ -2,6 +2,7 @@ package org.evlis.lunamatic.utilities;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
 
 import java.io.File;
@@ -14,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LangManager {
     private static LangManager instance;
@@ -21,6 +25,8 @@ public class LangManager {
     private final File languageFolder;
     private final Map<String, FileConfiguration> langs = new HashMap<>();
     private final String defaultLanguage;
+    private static Plugin plugin;
+    private static Logger logger;
 
     public LangManager(File pluginFolder, String defaultLanguage) {
         this.languageFolder = new File(pluginFolder, "lang");
@@ -31,8 +37,11 @@ public class LangManager {
         }
     }
 
-    public static void initialize(File pluginFolder, String defaultLanguage) {
+    public static void initialize(Plugin plugin_inst, File pluginFolder, String defaultLanguage) {
         instance = new LangManager(pluginFolder, defaultLanguage);
+        plugin = plugin_inst;
+        // initialize logger
+        logger = plugin.getLogger();
     }
 
     public static LangManager getInstance() {
@@ -46,32 +55,67 @@ public class LangManager {
         File[] files = languageFolder.listFiles((dir, name) -> name.endsWith(".yml"));
         if (files != null) {
             for (File file : files) {
-                String language = file.getName().replace(".yml", "");
+                String language = file.getName().replaceAll("\\.v\\d+\\.yml$", "");
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                 langs.put(language, config);
             }
         }
     }
 
+
     public void saveDefaultTranslations() {
+        // Pattern for filenames: en_US.v3.yml
+        Pattern versionPattern = Pattern.compile(".*\\.v(\\d+)\\.yml$");
+
         try {
             // Get the plugin JAR file
             String jarPath = getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
             JarFile jarFile = new JarFile(jarPath);
 
+            // First, scan language folder and clean up old files
+            File[] existingFiles = languageFolder.listFiles((dir, name) -> name.endsWith(".yml"));
+            if (existingFiles != null) {
+                for (File existing : existingFiles) {
+                    Matcher matcher = versionPattern.matcher(existing.getName());
+                    if (!matcher.matches() || // No version number
+                            Integer.parseInt(matcher.group(1)) < GlobalVars.lang_vers) { // Old version
+                        existing.delete();
+                        logger.info("Deleted outdated file: " + existing.getName());
+                    }
+                }
+            }
+
             Enumeration<JarEntry> entries = jarFile.entries();
             while (entries.hasMoreElements()) {
                 JarEntry entry = entries.nextElement();
 
-                // Check for files in the /translations/ folder
+                // Check for files in the /lang/ folder
                 if (entry.getName().startsWith("lang/") && entry.getName().endsWith(".yml")) {
                     String fileName = entry.getName().replace("lang/", "");
                     File translationFile = new File(languageFolder, fileName);
 
+                    boolean shouldCopy = false;
+
                     if (!translationFile.exists()) {
+                        shouldCopy = true;
+                    } else {
+                        // Check version from filename
+                        Matcher matcher = versionPattern.matcher(translationFile.getName());
+                        if (!matcher.matches()) {
+                            shouldCopy = true; // No version in filename = outdated
+                        } else {
+                            int version = Integer.parseInt(matcher.group(1));
+                            if (version < GlobalVars.lang_vers) {
+                                shouldCopy = true;
+                            }
+                        }
+                    }
+
+                    if (shouldCopy) {
                         try (InputStream inputStream = getClass().getResourceAsStream("/" + entry.getName())) {
                             if (inputStream != null) {
                                 Files.copy(inputStream, translationFile.toPath());
+                                logger.info("Updated translation file: " + fileName);
                             }
                         }
                     }
@@ -106,7 +150,7 @@ public class LangManager {
 
         if (translation == null) {
             // Final fallback: return a placeholder or hardcoded string
-            System.err.println("Translation missing! Key> " + key + " in language: " + language);
+            logger.severe("Translation missing! Key> " + key + " in language: " + language);
             translation = "langErr: " + key;
         }
 

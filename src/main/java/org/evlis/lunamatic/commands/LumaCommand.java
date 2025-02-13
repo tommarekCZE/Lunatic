@@ -50,7 +50,7 @@ public class LumaCommand extends BaseCommand {
             plugin.reloadConfig();
             Lunamatic.getInstance().loadGlobalConfig();
 
-            LangManager.initialize(plugin.getDataFolder(), GlobalVars.lang);
+            LangManager.initialize(plugin, plugin.getDataFolder(), GlobalVars.lang);
             getLangManager().loadTranslations();
 
             if (!getLangManager().doesTranslationExist(GlobalVars.lang)) {

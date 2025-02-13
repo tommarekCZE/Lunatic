@@ -1,0 +1,46 @@
+# Deutsch
+
+lang_load_success: "Sprache de_DE erfolgreich geladen!"
+
+plugin_success_load: "Aktivierung erfolgreich von Lunamatic v"
+
+update_check: "Suche nach Updates..."
+update_found: "Neue Version %a verfügbar (der Server ist auf v%b)! Hier herunterladen: https://modrinth.com/plugin/lunamatic"
+update_error: "Es konnte nicht nach Updates gesucht werden: "
+up_to_date: "Sie sind auf dem neuesten Stand!"
+
+cmd_running: "Der Server nutzt Lunamatic v"
+
+cmd_reload_success: "Lunamatic neu laden erfolgreich!"
+cmd_reload_fail: "Lunamatic ist auf einen Fehler gestoßen: "
+cmd_reload_warn: "Durch das Neuladen der Lunamatic können einige Probleme auftreten.\nBenutzen Sie das Neuladen nur zu Testzwecken."
+
+cmd_lang: "Geladene Sprache: "
+
+cmd_blood_moon_enabled: "Blutmond aktiviert: "
+cmd_blut_mond_jetzt: "Blutmond jetzt: "
+cmd_blut_mond_heute: "Blutmond heute: "
+
+cmd_harv_moon_enabled: "Erntemond aktiviert: "
+cmd_harv_moon_now: "Erntemond jetzt: "
+cmd_harv_moon_today: "Erntemond heute: "
+
+cmd_disabled_worlds: "Deaktivierte Welten: "
+cmd_curr_phase: "Aktuelle Mondphase für Welt: "
+
+sched_invalid_blood: "Ungültiger Blutmond entdeckt! Überspringe..."
+sched_invalid_harv: "Ungültiger Erntemond entdeckt! Überspringe..."
+
+sched_daydef_reset: "Voreinstellungen für den Tag zurücksetzen..."
+
+harvest_moon_tonight: "Heute Abend ist Erntemond."
+full_moon_tonight: "Heute Abend ist Vollmond."
+blood_moon_tonight: "Heute Abend ist Blutmond."
+new_moon_tonight: "Heute Nacht ist Neumond."
+
+grass_growing: "Du... hörst Gras wachsen?"
+lucky_feel: "Du fühlst dich glücklich!"
+wary_feel: "Du fühlst dich misstrauisch..."
+
+
+blood_moon_sleep: "Der Blutmond scheint! Du kannst nicht schlafen!"

@@ -7,6 +7,7 @@ plugin_success_load: "Successfully enabled Lunamatic v"
 update_check: "Checking for updates..."
 update_found: "New version %a available (you are on v%b)! Download here: https://modrinth.com/plugin/lunamatic"
 update_error: "Unable to check for updates: "
+up_to_date: "You are up to date!"
 
 cmd_running: "You are running Lunamatic v"
 
@@ -42,6 +43,3 @@ lucky_feel: "You feel lucky!"
 wary_feel: "You feel wary..."
 
 blood_moon_sleep: "The blood moon shines! You cannot sleep!"
-
-# DO NOT CHANGE THIS VARIABLE! Mismatch of lang_ver can cause missing translations.
-lang_ver: "2"

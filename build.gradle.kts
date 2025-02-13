@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.evlis"
-version = "1.2.0"
+version = "1.2.3"
 
 val targetJavaVersion = 21
 
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
 
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     implementation("net.kyori:adventure-api:4.18.0")
@@ -74,14 +74,14 @@ tasks {
     }
     runServer {
         // Keep runServer task to inherit project plugin
-        minecraftVersion("1.21.1")
+        minecraftVersion("1.21.4")
     }
 }
 
 // Test Paper run & immediately shut down, for github actions
 tasks.register<RunServer>("runServerTest") {
     dependsOn(tasks.shadowJar)
-    minecraftVersion("1.21.1")
+    minecraftVersion("1.21.4")
     downloadPlugins {
         github("Ifiht", "AutoStop", "v1.2.0", "AutoStop-1.2.0.jar")
     }
@@ -90,7 +90,7 @@ tasks.register<RunServer>("runServerTest") {
 // Start a local test server for login & manual testing
 tasks.register<RunServer>("runServerInteractive") {
     dependsOn(tasks.shadowJar)
-    minecraftVersion("1.21.1")
+    minecraftVersion("1.21.4")
     pluginJars.from(tasks.shadowJar)
 }
 
