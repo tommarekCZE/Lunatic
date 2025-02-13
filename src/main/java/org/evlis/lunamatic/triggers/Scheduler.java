@@ -79,20 +79,22 @@ public class Scheduler {
                 }
                 // Execute immediately after sunset starts
                 if (time >= 12010 && time < 12030) {
-                    if (GlobalVars.harvestMoonToday && !GlobalVars.harvestMoonNow) {
-                        GlobalVars.harvestMoonNow = true;
-                        // Ensure global var reset
-                        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-                            ResetFlags.resetTickSpeed(world);
-                        }, 24000 - (int)time);
-                        plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
-                        totoroDance.setRandomTickSpeed(world, 30);
-                        totoroDance.setClearSkies(world, (24000 - (int)time));
-                        PlayerMessage.Send(playerList, getTranslationManager().getTranslation("grass_growing"), NamedTextColor.GOLD);
-                    } else { // if for some reason both flags are still true, we have an invalid state
-                        logger.warning(getTranslationManager().getTranslation("sched_invalid_harv"));
-                        GlobalVars.harvestMoonToday = false;
-                        GlobalVars.harvestMoonNow = false;
+                    if (GlobalVars.harvestMoonToday || GlobalVars.harvestMoonNow) {
+                        if (GlobalVars.harvestMoonToday && !GlobalVars.harvestMoonNow) {
+                            GlobalVars.harvestMoonNow = true;
+                            // Ensure global var reset
+                            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+                                ResetFlags.resetTickSpeed(world);
+                            }, 24000 - (int)time);
+                            plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
+                            totoroDance.setRandomTickSpeed(world, 30);
+                            totoroDance.setClearSkies(world, (24000 - (int)time));
+                            PlayerMessage.Send(playerList, getTranslationManager().getTranslation("grass_growing"), NamedTextColor.GOLD);
+                        } else { // if for some reason both flags are still true, we have an invalid state
+                            logger.warning(getTranslationManager().getTranslation("sched_invalid_harv"));
+                            GlobalVars.harvestMoonToday = false;
+                            GlobalVars.harvestMoonNow = false;
+                        }
                     }
                 }
                 // Execute exactly at the start of night
@@ -101,14 +103,16 @@ public class Scheduler {
                     for (Player p : playerList) {
                         NightEffects.ApplyMoonlight(p, moonPhase, (24000 - (int)time));
                     }
-                    if (GlobalVars.bloodMoonToday && !GlobalVars.bloodMoonNow) {
-                        GlobalVars.bloodMoonNow = true;
-                        // Ensure global var reset
-                        plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
-                    } else { // if for some reason both flags are still true, we have an invalid state
-                        logger.warning(getTranslationManager().getTranslation("sched_invalid_blood"));
-                        GlobalVars.bloodMoonToday = false;
-                        GlobalVars.bloodMoonNow = false;
+                    if (GlobalVars.bloodMoonToday || GlobalVars.bloodMoonNow) {
+                        if (GlobalVars.bloodMoonToday && !GlobalVars.bloodMoonNow) {
+                            GlobalVars.bloodMoonNow = true;
+                            // Ensure global var reset
+                            plugin.getServer().getScheduler().runTaskLater(plugin, ResetFlags::resetAll, 24000 - (int)time);
+                        } else { // if for some reason both flags are still true, we have an invalid state
+                            logger.warning(getTranslationManager().getTranslation("sched_invalid_blood"));
+                            GlobalVars.bloodMoonToday = false;
+                            GlobalVars.bloodMoonNow = false;
+                        }
                     }
                 }
             }

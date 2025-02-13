@@ -9,6 +9,8 @@ import java.util.Map;
 public class GlobalVars {
     // Test flag
     public static Boolean debug = false;
+    // Language version increment
+    public static Integer lang_vers = 3;
     // Check for updates?
     public static Boolean checkUpdates = true;
     //
