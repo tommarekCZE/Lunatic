@@ -8,7 +8,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import io.papermc.paper.world.MoonPhase;
 import net.kyori.adventure.text.format.NamedTextColor;
 
+import org.bukkit.plugin.Plugin;
 import org.evlis.lunamatic.GlobalVars;
+import org.evlis.lunamatic.Lunamatic;
 import org.evlis.lunamatic.triggers.NightEffects;
 import org.evlis.lunamatic.utilities.PlayerMessage;
 import org.evlis.lunamatic.utilities.ResetFlags;
@@ -19,6 +21,7 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         LangManager langManager = LangManager.getInstance();
+        Plugin plugin = Lunamatic.getInstance();
         Player player = event.getPlayer();
         World world = player.getWorld();
         if (world.getPlayers().isEmpty()) {
@@ -38,7 +41,7 @@ public class PlayerJoin implements Listener {
                     PlayerMessage.Send(player, langManager.getTranslation("full_moon_tonight"), NamedTextColor.YELLOW);
                 }
                 if (time >= 12610) {
-                    NightEffects.ApplyMoonlight(player, MoonPhase.FULL_MOON, (24000 - (int)time));
+                    NightEffects.ApplyMoonlight(plugin, player, MoonPhase.FULL_MOON, (24000 - (int)time));
                 }
             } else if (moonPhase == MoonPhase.NEW_MOON) {
                 if (GlobalVars.bloodMoonToday) {
@@ -47,7 +50,7 @@ public class PlayerJoin implements Listener {
                     PlayerMessage.Send(player, langManager.getTranslation("new_moon_tonight"), NamedTextColor.DARK_GRAY);
                 }
                 if (time >= 12610) {
-                    NightEffects.ApplyMoonlight(player, MoonPhase.NEW_MOON, (24000 - (int)time));
+                    NightEffects.ApplyMoonlight(plugin, player, MoonPhase.NEW_MOON, (24000 - (int)time));
                 }
             } else {
                 // Catch for stuck flags during wrong moon-phase..

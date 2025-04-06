@@ -101,7 +101,7 @@ public class Scheduler {
                 if (time >= 12980 && time < 13000) {
                     @NotNull MoonPhase moonPhase = world.getMoonPhase();
                     for (Player p : playerList) {
-                        NightEffects.ApplyMoonlight(p, moonPhase, (24000 - (int)time));
+                        NightEffects.ApplyMoonlight(plugin, p, moonPhase, (24000 - (int)time));
                     }
                     if (GlobalVars.bloodMoonToday || GlobalVars.bloodMoonNow) {
                         if (GlobalVars.bloodMoonToday && !GlobalVars.bloodMoonNow) {
