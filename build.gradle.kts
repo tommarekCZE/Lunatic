@@ -80,7 +80,9 @@ tasks {
 // Test Paper run & immediately shut down, for github actions
 tasks.register<RunServer>("runServerTest") {
     dependsOn(tasks.shadowJar)
-    minecraftVersion("1.21.4")
+    // Accept a Minecraft version via -PmcVersion=1.21.5, default to 1.21.4
+    val mcVersion = project.findProperty("mcVersion") as String? ?: "1.21.4"
+    minecraftVersion(mcVersion)
     downloadPlugins {
         github("Ifiht", "AutoStop", "v1.2.0", "AutoStop-1.2.0.jar")
     }
