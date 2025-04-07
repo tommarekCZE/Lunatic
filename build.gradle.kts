@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.evlis"
-version = "1.2.3"
+version = "1.3.0"
 
 val targetJavaVersion = 21
 
