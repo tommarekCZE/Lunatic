@@ -96,6 +96,19 @@ public class LumaCommand extends BaseCommand {
         player.sendMessage(getLangManager().getTranslation("cmd_curr_phase") + world.getName() + ": " + moonPhase);
     }
 
+    @Subcommand("nextmoon")
+    @CommandPermission("luma.command.nextmoon")
+    @Description("Progresses the moon phase forward by one")
+    public void nextMoon(Player player) {
+        // this command is player only!!!
+        // get the current world & moon state:
+        World world = player.getWorld();
+        ResetFlags.resetAll();
+        logger.info("Current game time: " + world.getFullTime());
+        world.setFullTime(world.getFullTime() + 24000L);
+        logger.info("New game time: " + world.getFullTime());
+    }
+
     @Subcommand("makebloodmoon")
     @CommandPermission("luma.command.makebloodmoon")
     @Description("Changes the current world state to Blood Moon")
@@ -103,10 +116,13 @@ public class LumaCommand extends BaseCommand {
         // this command is player only!!!
         // get the current world & moon state:
         World world = player.getWorld();
+        ResetFlags.resetAll();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
         if(moonPhase != MoonPhase.NEW_MOON) {
             ResetFlags.resetAll();
-            world.setTime(world.getTime() + (long)GlobalVars.newMoonOffset.getOrDefault(moonPhase, 0));
+            long moonskip = (long)GlobalVars.newMoonOffset.getOrDefault(moonPhase, 0);
+            logger.info("Skipping ahead by " + moonskip + " seconds.");
+            world.setFullTime(world.getFullTime() + moonskip);
         }
         if(!GlobalVars.bloodMoonToday){
             GlobalVars.bloodMoonToday = true;
@@ -123,10 +139,12 @@ public class LumaCommand extends BaseCommand {
         // this command is player only!!!
         // get the current world & moon state:
         World world = player.getWorld();
+        ResetFlags.resetAll();
         @NotNull MoonPhase moonPhase = world.getMoonPhase();
         if(moonPhase != MoonPhase.FULL_MOON) {
-            ResetFlags.resetAll();
-            world.setTime(world.getTime() + (long)GlobalVars.fullMoonOffset.getOrDefault(moonPhase, 0));
+            long moonskip = (long)GlobalVars.fullMoonOffset.getOrDefault(moonPhase, 0);
+            logger.info("Skipping ahead by " + moonskip + " seconds.");
+            world.setFullTime(world.getFullTime() + moonskip);
         }
         if(!GlobalVars.harvestMoonToday){
             GlobalVars.harvestMoonToday = true;

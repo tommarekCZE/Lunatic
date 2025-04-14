@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.evlis"
-version = "1.3.0"
+version = "1.3.1"
 
 val targetJavaVersion = 21
 
@@ -89,7 +89,13 @@ tasks.register<RunServer>("runServerTest") {
     pluginJars.from(tasks.shadowJar)
 }
 // Start a local test server for login & manual testing
-tasks.register<RunServer>("runServerInteractive") {
+tasks.register<RunServer>("runServerInteractive_1-21-1") {
+    dependsOn(tasks.shadowJar)
+    minecraftVersion("1.21.1")
+    pluginJars.from(tasks.shadowJar)
+}
+// Start a local test server for login & manual testing
+tasks.register<RunServer>("runServerInteractive_1-21-4") {
     dependsOn(tasks.shadowJar)
     minecraftVersion("1.21.4")
     pluginJars.from(tasks.shadowJar)

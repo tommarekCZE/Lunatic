@@ -53,6 +53,7 @@ commands:
   silent-commandblock-console: false
   tab-complete: 0
   send-namespaced: true
+  enable-spam-exclusions: false
 players:
   disable-saving: false
 world-settings:
