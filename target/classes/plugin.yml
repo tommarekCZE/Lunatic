@@ -1,3 +1,3 @@
 name: Lunamatic Legacy Support
-version: '${project.version}'
+version: '1.0-SNAPSHOT'
 main: net.tomas.luna.LunamaticLegacySupport
